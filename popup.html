@@ -2,14 +2,41 @@
 <html>
   <head>
     <style>
-      button {
-        height: 30px;
-        width: 30px;
-        outline: none;
+    *{
+        padding: 0;
+        margin: 0;
+    }
+      h1{
+          text-align: center;
+      }
+
+      .cocktailIcon{
+          height: 100px;
+          display: block;
+          margin: auto;
+      }
+      body{
+          width: 200px;
+      }
+      .pointsIcon{
+          width: 30px;
+          height: 30px;
+          display: inline-block;
+          position: relative;
+          top: 7px;
+      }
+
+      .pointsText{
+          font-size: 20px;
+          display: inline-block;
+          position: relative;
+          left: 5px;
       }
     </style>
   </head>
   <body>
-    <button id="changeColor"></button>
+    <img class="cocktailIcon" src="./images/default.png"/>
+    <h1 id="clock">00:00</h1>
+    <img class="pointsIcon" src="./images/points.jpeg"/><div class="pointsText">0</div>
   </body>
 </html>
