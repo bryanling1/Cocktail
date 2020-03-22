@@ -49,7 +49,7 @@ const video = document.querySelector('video');
 let pauseVideo = function(){}
 
 if(video){
-    video.addEventListener('play', (event) => {
+    video.addEventListener('playing', (event) => {
         if(isTimerOn == false){
             chrome.extension.sendMessage({"message":"playingVideo"});
             isTimerOn = true;
