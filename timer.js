@@ -19,10 +19,10 @@ playButtonRef ? (playButtonRef.onclick = function(){
     timerButton();
 }):(null);
 
-successButtonRef.onclick = function(){
+successButtonRef ? (successButtonRef.onclick = function(){
     toggleSuccess();
     setBeverage();
-}
+}):(null);
 
 function timerButton(){
     chrome.extension.sendMessage({"message":"timerButton", "time": timerVal});

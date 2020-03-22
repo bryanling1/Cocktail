@@ -16,6 +16,7 @@ let timerVal = null;
 let cockTimerVal = null;
 let isTimerOn = false;
 let cockReward = null;
+let beverageSet = false;
 
 
 chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
@@ -46,9 +47,13 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
         }
     }
     else if (req.message == "setBeverage"){
-        cockReward  = req.cocktailSeconds;
-        timerVal = req.timeUntilReady;
-        sendClockVal(timerVal);
+        if(beverageSet == false){
+            cockReward  = req.cocktailSeconds;
+            timerVal = req.timeUntilReady;
+            sendClockVal(timerVal);
+            beverageSet = true;
+        }
+        
     }
 })
 
@@ -105,6 +110,7 @@ function success(){
         chrome.extension.sendMessage({"message": "displayCocktailTime", "data": data["cocktailSeconds"] +  cockReward})
         chrome.extension.sendMessage({"message": "success"})
         isTimerOn = false;
+        beverageSet = false;
 
     });
 }
