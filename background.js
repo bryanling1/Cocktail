@@ -1,16 +1,23 @@
 chrome.runtime.onInstalled.addListener(function() {
-    chrome.storage.sync.set(
-        {timerSeconds: 1200,
-        cocktailSeconds: 0,
-        cocktailsMade: 0,
-    }
-    );
+    chrome.storage.sync.get("coctailSeconds", function(data){
+        if(data["coctailSeconds"] == undefined){
+            chrome.storage.sync.set(
+                {
+                cocktailSeconds: 0,
+                cocktailsMade: 0,
+            }
+            );
+        }
+    })
 })
 
 let timerInterval = null;
+let cockTimerInterval = null;
 let timerVal = null;
+let cockTimerVal = null;
 let initTimerVal = 120;
 let isTimerOn = false;
+
 
 chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
     if(req.message == "timerButton"){
@@ -29,6 +36,19 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
         chrome.storage.sync.get("cocktailSeconds", function(data){
             chrome.extension.sendMessage({"message": "displayCocktailTime", "data": data["cocktailSeconds"]})
         });
+    }else if (req.message == "playingVideo"){
+        chrome.storage.sync.get("cocktailSeconds", function(data){
+            cockTimerVal = data["cocktailSeconds"];
+            if(cockTimerVal > 0){
+                cockTimerInterval = setInterval(cockClockDown, 1000);
+            }else{
+                chrome.extension.sendMessage({"message": "noCockTime"});
+            }
+        });
+    }else if (req.message == "pauseVideo"){
+        if(cockTimerVal){
+            setCockTimerVal(cockTimerVal);
+        }
     }
 })
 
@@ -45,8 +65,31 @@ function clockDown(){
     sendClockVal(timerVal);
 }
 
+function stopCockClock(){
+    clearInterval(cockTimerInterval);
+}
+
+function cockClockDown(){
+    if(cockTimerVal <= 1){
+        stopCockClock();
+    }
+    cockTimerVal -= 1;
+    sendCockClockVal(cockTimerVal);
+    setCockTimerVal(cockTimerVal);
+}
+
+function setCockTimerVal(val){
+    chrome.storage.sync.set({
+        cocktailSeconds: val
+    })
+}
+
 function sendClockVal(val){
     chrome.extension.sendMessage({"message": "startTimer", "time": val});
+}
+
+function sendCockClockVal(val){
+    chrome.extension.sendMessage({"message": "getCockClockVal", "data": val});
 }
 
 function success(){
@@ -57,7 +100,6 @@ function success(){
         chrome.extension.sendMessage({"message": "displayCocktailTime", "data": data["cocktailSeconds"] + initTimerVal})
     });
 }
-
 
 
 
