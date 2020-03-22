@@ -29,7 +29,7 @@ function timerButton(){
 }
 
 function displayTime(data){
-    clockRef.innerHTML = data;
+    clockRef.innerHTML = secondsToClockString(data);
 }
 
 function getCurrentTime(){
@@ -37,7 +37,7 @@ function getCurrentTime(){
 }
 
 function displayCockTime(data){
-    cockTimeRef.innerHTML = data;
+    cockTimeRef.innerHTML = secondsToClockString(data);
 }
 
 function getCockTime(){
@@ -55,6 +55,13 @@ function setBeverage(){
 
 function toggleSuccess(){
     successScreenRef.classList.toggle("success-off");
+}
+
+function secondsToClockString(time){
+    let minutes = Math.floor(time / 60); 
+    let seconds = time % 60;
+    let secondsDisplay = seconds < 10?("0" + seconds):(seconds);
+    return minutes + ":" +  secondsDisplay;
 }
 
 chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
@@ -89,6 +96,7 @@ if(video){
     });
     pauseVideo = function(){
         video.pause();
+        alert("You're out of drinks!")
     }
 }
 
