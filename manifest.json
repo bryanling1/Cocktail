@@ -2,7 +2,7 @@
     "name": "Cocktail",
     "version": "1.0",
     "description": "",
-    "permissions": ["storage", "declarativeContent", "activeTab", "*://*/*", "tabs"], 
+    "permissions": ["storage", "declarativeContent", "activeTab", "*://*/*", "tabs","notifications"], 
     "options_page": "options.html",
     "background": {
         "scripts": ["background.js"],
