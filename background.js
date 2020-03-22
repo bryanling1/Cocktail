@@ -39,15 +39,12 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
     }else if (req.message == "playingVideo"){
         chrome.storage.sync.get("cocktailSeconds", function(data){
             cockTimerVal = data["cocktailSeconds"];
-            if(cockTimerVal > 0){
-                cockTimerInterval = setInterval(cockClockDown, 1000);
-            }else{
-                chrome.extension.sendMessage({"message": "noCockTime"});
-            }
+            cockTimerInterval = setInterval(cockClockDown, 1000);
         });
     }else if (req.message == "pauseVideo"){
         if(cockTimerVal){
             setCockTimerVal(cockTimerVal);
+            stopCockClock();
         }
     }
 })
@@ -70,12 +67,17 @@ function stopCockClock(){
 }
 
 function cockClockDown(){
-    if(cockTimerVal <= 1){
+    if(cockTimerVal <= 0){
         stopCockClock();
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, {"message": "noCockTime"});
+          });
+    }else{
+        cockTimerVal -= 1;
+        sendCockClockVal(cockTimerVal);
+        setCockTimerVal(cockTimerVal);
     }
-    cockTimerVal -= 1;
-    sendCockClockVal(cockTimerVal);
-    setCockTimerVal(cockTimerVal);
+    
 }
 
 function setCockTimerVal(val){

@@ -1,4 +1,3 @@
-
 const playButtonRef = document.getElementById('timerToggle');
 const clockRef = document.getElementById('clock');
 const cockTimeRef = document.getElementById('cockTime');
@@ -39,7 +38,6 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
     }else if (req.message == "getCockClockVal"){
         displayCockTime(req.data);
     }else if (req.message == "noCockTime"){
-        alert("no time")
         pauseVideo();
     }
 })
