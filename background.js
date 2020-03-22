@@ -3,7 +3,6 @@ chrome.runtime.onInstalled.addListener(function() {
         if(data["coctailSeconds"] == undefined){
             chrome.storage.sync.set(
                 {
-                cocktailSeconds: 0,
                 cocktailsMade: 0,
             }
             );
@@ -15,8 +14,8 @@ let timerInterval = null;
 let cockTimerInterval = null;
 let timerVal = null;
 let cockTimerVal = null;
-let initTimerVal = 120;
 let isTimerOn = false;
+let cockReward = null;
 
 
 chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
@@ -25,13 +24,12 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
             isTimerOn = false;
             stopClock(timerInterval);
         }else{
-            initTimerVal = req.time;
-            timerVal = timerVal?(timerVal):(initTimerVal);
+            timerVal = timerVal;
             isTimerOn = true;
             timerInterval = setInterval(clockDown, 1000);
         }
     }else if(req.message == "showTime"){
-        sendClockVal(timerVal?(timerVal):(initTimerVal));
+        sendClockVal(timerVal);
     }else if(req.message == "getCockTime"){
         chrome.storage.sync.get("cocktailSeconds", function(data){
             chrome.extension.sendMessage({"message": "displayCocktailTime", "data": data["cocktailSeconds"]})
@@ -46,6 +44,11 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
             setCockTimerVal(cockTimerVal);
             stopCockClock();
         }
+    }
+    else if (req.message == "setBeverage"){
+        cockReward  = req.cocktailSeconds;
+        timerVal = req.timeUntilReady;
+        sendClockVal(timerVal);
     }
 })
 
@@ -97,9 +100,12 @@ function sendCockClockVal(val){
 function success(){
     chrome.storage.sync.get("cocktailSeconds", function(data){
         chrome.storage.sync.set(
-            {cocktailSeconds: data["cocktailSeconds"] + initTimerVal,
+            {cocktailSeconds: data["cocktailSeconds"] + cockReward,
         });
-        chrome.extension.sendMessage({"message": "displayCocktailTime", "data": data["cocktailSeconds"] + initTimerVal})
+        chrome.extension.sendMessage({"message": "displayCocktailTime", "data": data["cocktailSeconds"] +  cockReward})
+        chrome.extension.sendMessage({"message": "success"})
+        isTimerOn = false;
+
     });
 }
 

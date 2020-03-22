@@ -1,14 +1,28 @@
 const playButtonRef = document.getElementById('timerToggle');
 const clockRef = document.getElementById('clock');
 const cockTimeRef = document.getElementById('cockTime');
+const successButtonRef = document.getElementById('successButton');
+const successScreenRef = document.getElementById('successScreen');
 let timerInterval = null;
 let timerVal = 10;
-let isTimerOn = false;
-let isVideoPlaying = true;
+let isVideoPlaying = false;
+let cocktails = [
+    {
+        "name": "first",
+        "cocktailSeconds": 300,
+        "timeUntilReady": 10
+    }
+]
+let cocktailsIndex = 0;
 
 playButtonRef ? (playButtonRef.onclick = function(){
     timerButton();
 }):(null);
+
+successButtonRef.onclick = function(){
+    toggleSuccess();
+    setBeverage();
+}
 
 function timerButton(){
     chrome.extension.sendMessage({"message":"timerButton", "time": timerVal});
@@ -30,6 +44,19 @@ function getCockTime(){
     chrome.extension.sendMessage({"message":"getCockTime"});
 }
 
+function setBeverage(){
+    chrome.extension.sendMessage({
+        "message":"setBeverage", 
+        "name": cocktails[cocktailsIndex]["name"],
+        "cocktailSeconds": cocktails[cocktailsIndex]["cocktailSeconds"],
+        "timeUntilReady": cocktails[cocktailsIndex]["timeUntilReady"],
+    });
+}
+
+function toggleSuccess(){
+    successScreenRef.classList.toggle("success-off");
+}
+
 chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
     if(req.message == "startTimer"){
         displayTime(req.time);
@@ -39,32 +66,36 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
         displayCockTime(req.data);
     }else if (req.message == "noCockTime"){
         pauseVideo();
+    }else if (req.message == "success"){
+        toggleSuccess();
     }
 })
-
-getCurrentTime();
-getCockTime();
 
 const video = document.querySelector('video');
 let pauseVideo = function(){}
 
 if(video){
     video.addEventListener('playing', (event) => {
-        if(isTimerOn == false){
+        if(isVideoPlaying == false){
             chrome.extension.sendMessage({"message":"playingVideo"});
-            isTimerOn = true;
+            isVideoPlaying = true;
         }
     });
     video.addEventListener('pause', (event) => {
-        if(isTimerOn == true){
+        if(isVideoPlaying == true){
             chrome.extension.sendMessage({"message":"pauseVideo"});
-            isTimerOn = false;
+            isVideoPlaying = false;
         }
     });
     pauseVideo = function(){
         video.pause();
     }
 }
+
+setBeverage();
+getCurrentTime();
+getCockTime();
+
 
 
 

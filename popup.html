@@ -1,41 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
-    *{
-        padding: 0;
-        margin: 0;
-    }
-      h1{
-          text-align: center;
-      }
-
-      .cocktailIcon{
-          height: 100px;
-          display: block;
-          margin: auto;
-          cursor: pointer;
-      }
-      body{
-          width: 200px;
-      }
-      .pointsIcon{
-          width: 30px;
-          height: 30px;
-          display: inline-block;
-          position: relative;
-          top: 7px;
-      }
-
-      .pointsText{
-          font-size: 20px;
-          display: inline-block;
-          position: relative;
-          left: 5px;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="main.css">
   </head>
   <body>
+    <div id="successScreen" class="success success-off">
+      Congrats!<br/>
+      <button id="successButton">OK</button>
+    </div>
     <img id="timerToggle" class="cocktailIcon" src="./images/default.png"/>
     <h1 id="clock"></h1>
     <img class="pointsIcon" src="./images/points.jpeg"/><div class="pointsText" id="cockTime"></div>
