@@ -96,14 +96,43 @@
     position: absolute;
     bottom: 0;
     background-color: white;
-    height: 1%;
+    height: 0%;
     z-index: 11;
     width: 100%;
+    cursor: pointer;
+    transition: height ease-in-out 0.6s;
+    transition-delay: 0.4s;
+    
 }
+
+.text{
+    color: white;
+    text-align: center;
+    position: relative;
+    top: -18px;
+    opacity: 0;
+    animation-name: reveal;
+    animation-duration: 0.2s;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease;
+}
+
+@keyframes reveal{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
 
 #today{
     font-weight: normal;
     font-size: 14px;
 }
 
-  
+.hideStats{
+    display: none;
+}

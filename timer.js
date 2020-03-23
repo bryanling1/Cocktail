@@ -12,7 +12,7 @@ let cocktails = [
     {
         "name": "first",
         "cocktailSeconds": 300,
-        "timeUntilReady": 1200
+        "timeUntilReady": 60
     }
 ]
 let cocktailsIndex = 0;
@@ -162,7 +162,62 @@ getMinutesToday();
 displayMinutesToday();
 
 //////////////////////////////////////For the graph///////////////////////////////////
-let daysOfWeek = [{}, {}, {}, {}, {}, {}, {}]
-function setWeek(date){
-    date = new Date().get
+let weekData = [{}, {}, {}, {}, {}, {}, {}]
+
+function setCurrentWeekDates(){
+    dateToday = new Date();
+    index = dateToday.getDay();
+    //set days before
+    for(let i=0;i<=index;i++){
+        date = new Date();
+        dateI = date.getDay()
+        date.setDate(date.getDate() - i);
+        weekData[dateI - i]["date"] = date;
+    }
+    //set days after
+    for(let i=1;i<7-index;i++){
+        date = new Date();
+        dateI = date.getDay()
+        date.setDate(date.getDate() + i);
+        weekData[dateI + i]["date"] = date;
+    }
 }
+
+function setWeekVals(){
+    let largestVal = 0;
+    let allData = null;
+    chrome.storage.sync.get("allData", function(data){
+        if(data){
+            allData = data['allData'];
+            //get the largest value as reference
+            for(let i=0; i<7; i++){
+                let date = weekData[i]["date"].toDateString();
+                //set minute value
+                weekData[i]["minutes"] = allData[date] ? (allData[date]):(0);
+                if(allData[date] > largestVal){
+                    largestVal = allData[date];
+                }
+            }
+            if(largestVal == 0){
+                largestVal = 1000000;
+            }
+            //display
+            const weekChartRef = document.querySelectorAll(".week .bars .column .val");
+            weekChartRef.forEach((item, i)=>{
+                console.log(weekData[i]['minutes'] / largestVal)
+                item.style.height = Math.floor(weekData[i]['minutes'] / largestVal * 100).toString()+"%";
+                if(weekData[i]['minutes'] > 0){
+                    item.querySelector(".text").innerHTML = weekData[i]['minutes'];
+                } 
+            })
+
+            
+        }
+    })
+}
+
+setCurrentWeekDates()
+setWeekVals()
+
+
+

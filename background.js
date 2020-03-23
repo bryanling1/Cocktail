@@ -1,9 +1,11 @@
 chrome.runtime.onInstalled.addListener(function() {
-    chrome.storage.sync.get("coctailSeconds", function(data){
-        if(data["coctailSeconds"] == undefined){
+    chrome.storage.sync.get("cocktailSeconds", function(data){
+        if(data["cocktailSeconds"] == undefined){
             chrome.storage.sync.set(
                 {
                 cocktailsMade: 0,
+                allData: {},
+                cocktailSeconds: 0
             }
             );
         }
