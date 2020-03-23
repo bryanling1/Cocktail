@@ -15,7 +15,7 @@ let cocktails = [
     {
         "name": "first",
         "cocktailSeconds": 300,
-        "timeUntilReady": 60
+        "timeUntilReady": 1200
     }
 ]
 let cocktailsIndex = 0;
@@ -163,7 +163,7 @@ function getMinutesToday(){
     })
 }
 function displayMinutesToday(){
-    minutesTodayRef.innerHTML = minutesToday+"mins Today"
+    minutesTodayRef.innerHTML = minutesToday+" mins Today"
 }
 
 setBeverage();
@@ -232,7 +232,6 @@ function toggleStats(){
     setCurrentWeekDates()
     setWeekVals()
 }
-
 
 
 

@@ -10,9 +10,14 @@
   }
   .cocktailIcon{
       height: 70px;
+      width: 70px;
       display: block;
       margin: auto;
       cursor: pointer;
+      border-radius: 100%;
+      background-image: url("./images/default.gif");
+      background-size: 260%;
+      background-position: 48% center;
   }
   body{
       width: 200px;
@@ -32,7 +37,7 @@
       font-size: 14px;
       display: inline-block;
       position: relative;
-      left: 8px;
+      left: 4px;
       top: -3px;
   }
 
