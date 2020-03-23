@@ -9,7 +9,7 @@ let isVideoPlaying = false;
 let cocktails = [
     {
         "name": "first",
-        "cocktailSeconds": 0,
+        "cocktailSeconds": 10,
         "timeUntilReady": 5
     }
 ]
@@ -141,3 +141,7 @@ if(video){
 setBeverage();
 getCurrentTime();
 getCockTime();
+
+
+//For the graph
+let daysOfWeek = [{}, {}, {}, {}, {}, {}, {}]

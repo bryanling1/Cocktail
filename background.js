@@ -112,6 +112,7 @@ function success(){
         isTimerOn = false;
         beverageSet = false;
         pushSuccessNotification();
+        saveMinutes(cockReward);
 
     });
 }
@@ -151,6 +152,25 @@ function pushSuccessNotification() {
     // want to be respectful there is no need to bother them any more.
   }
 
+  function saveMinutes(minutes){
+      minutes = Math.floor(minutes / 60);
+      let date = new Date().toDateString();
+      chrome.storage.sync.get(date, function(data){
+        if(data[date] == undefined){
+            chrome.storage.sync.set(
+            {
+                date: minutes,
+            }
+            );
+        }else{
+            chrome.storage.sync.set(
+                {
+                    date: minutes,
+                }
+            );
+        }
+    })
+  }
 
 
 
