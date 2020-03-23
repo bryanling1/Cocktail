@@ -4,6 +4,9 @@ const cockTimeRef = document.getElementById('cockTime');
 const successButtonRef = document.getElementById('successButton');
 const successScreenRef = document.getElementById('successScreen');
 const minutesTodayRef = document.getElementById('today');
+const statsRef = document.getElementById('stats');
+const statsToggleRef = document.getElementById('stats-icon');
+const backRef = document.getElementById('back-icon');
 let timerInterval = null;
 let timerVal = 10;
 let isVideoPlaying = false;
@@ -24,6 +27,14 @@ playButtonRef ? (playButtonRef.onclick = function(){
 successButtonRef ? (successButtonRef.onclick = function(){
     toggleSuccess();
     setBeverage();
+}):(null);
+
+statsToggleRef ? (statsToggleRef.onclick = function(){
+    toggleStats();
+}):(null);
+
+backRef ? (backRef.onclick = function(){
+    toggleStats();
 }):(null);
 
 function timerButton(){
@@ -216,8 +227,13 @@ function setWeekVals(){
     })
 }
 
-setCurrentWeekDates()
-setWeekVals()
+function toggleStats(){
+    statsRef.classList.toggle("hideStats");
+    setCurrentWeekDates()
+    setWeekVals()
+}
+
+
 
 
 

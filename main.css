@@ -5,9 +5,11 @@
   h1{
       text-align: center;
   }
-
+  #clock{
+      margin-top: 10px;
+  }
   .cocktailIcon{
-      height: 100px;
+      height: 70px;
       display: block;
       margin: auto;
       cursor: pointer;
@@ -18,18 +20,20 @@
       color: white;
   }
   .pointsIcon{
-      width: 30px;
-      height: 30px;
+      width: 17px;
+      height: 17px;
       display: inline-block;
       position: relative;
-      top: 7px;
+      top: 0px;
+      left: 4px;
   }
 
   .pointsText{
-      font-size: 20px;
+      font-size: 14px;
       display: inline-block;
       position: relative;
-      left: 5px;
+      left: 8px;
+      top: -3px;
   }
 
   .success{
@@ -135,4 +139,26 @@
 
 .hideStats{
     display: none;
+}
+
+.icon{
+    width: 17px;
+    cursor: pointer;
+    padding: 7px;
+}
+
+.icon:hover{
+    background-color: rgba(0,0,0,0.1);
+}
+
+.stats-icon{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.back-icon{
+    position: absolute;
+    top: 0;
+    right: 0;
 }
