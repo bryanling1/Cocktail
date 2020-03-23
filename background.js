@@ -13,6 +13,7 @@ chrome.runtime.onInstalled.addListener(function() {
 let timerInterval = null;
 let cockTimerInterval = null;
 let timerVal = null;
+let initTimerVal = null;
 let cockTimerVal = null;
 let isTimerOn = false;
 let cockReward = null;
@@ -50,6 +51,7 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
         if(beverageSet == false){
             cockReward  = req.cocktailSeconds;
             timerVal = req.timeUntilReady;
+            initTimerVal = req.timeUntilReady;
             sendClockVal(timerVal);
             beverageSet = true;
         }
@@ -108,11 +110,11 @@ function success(){
             {cocktailSeconds: data["cocktailSeconds"] + cockReward,
         });
         chrome.extension.sendMessage({"message": "displayCocktailTime", "data": data["cocktailSeconds"] +  cockReward})
-        chrome.extension.sendMessage({"message": "success"})
+        chrome.extension.sendMessage({"message": "success", "time": initTimerVal})
         isTimerOn = false;
         beverageSet = false;
         pushSuccessNotification();
-        saveMinutes(cockReward);
+        saveMinutes(initTimerVal);
 
     });
 }
@@ -153,23 +155,23 @@ function pushSuccessNotification() {
   }
 
   function saveMinutes(minutes){
-      minutes = Math.floor(minutes / 60);
-      let date = new Date().toDateString();
-      chrome.storage.sync.get(date, function(data){
-        if(data[date] == undefined){
-            chrome.storage.sync.set(
-            {
-                date: minutes,
-            }
-            );
-        }else{
-            chrome.storage.sync.set(
-                {
-                    date: minutes,
-                }
-            );
+    minutes = Math.floor(minutes / 60);
+    let date = new Date().toDateString();
+    let allData = {};
+    chrome.storage.sync.get("allData", function(data){
+        if(data){
+            allData = data["allData"];
         }
+        if(date in allData){
+            allData[date] += minutes;
+        }else{
+            allData[date] = minutes;
+        }
+    
+        chrome.storage.sync.set({'allData': allData});
     })
+    
+
   }
 
 

@@ -3,14 +3,16 @@ const clockRef = document.getElementById('clock');
 const cockTimeRef = document.getElementById('cockTime');
 const successButtonRef = document.getElementById('successButton');
 const successScreenRef = document.getElementById('successScreen');
+const minutesTodayRef = document.getElementById('today');
 let timerInterval = null;
 let timerVal = 10;
 let isVideoPlaying = false;
+let minutesToday = 0;
 let cocktails = [
     {
         "name": "first",
-        "cocktailSeconds": 10,
-        "timeUntilReady": 5
+        "cocktailSeconds": 300,
+        "timeUntilReady": 1200
     }
 ]
 let cocktailsIndex = 0;
@@ -113,6 +115,8 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
         pauseVideo();
     }else if (req.message == "success"){
         toggleSuccess();
+        minutesToday += Math.floor(req.time/60);
+        displayMinutesToday()
     }
 })
 
@@ -138,10 +142,27 @@ if(video){
     }
 }
 
+function getMinutesToday(){
+    const date = new Date().toDateString();
+    chrome.storage.sync.get("allData", function(data){
+        if(date in data["allData"]){
+            minutesToday = data["allData"][date]
+        }
+        displayMinutesToday();
+    })
+}
+function displayMinutesToday(){
+    minutesTodayRef.innerHTML = minutesToday+"mins Today"
+}
+
 setBeverage();
 getCurrentTime();
 getCockTime();
+getMinutesToday();
+displayMinutesToday();
 
-
-//For the graph
+//////////////////////////////////////For the graph///////////////////////////////////
 let daysOfWeek = [{}, {}, {}, {}, {}, {}, {}]
+function setWeek(date){
+    date = new Date().get
+}
