@@ -26,10 +26,12 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
     if(req.message == "timerButton"){
         if(isTimerOn == true){
             isTimerOn = false;
+            timerIsOff()
             stopClock(timerInterval);
         }else{
             timerVal = timerVal;
             isTimerOn = true;
+            timerIsOn()
             timerInterval = setInterval(clockDown, 1000);
         }
     }else if(req.message == "showTime"){
@@ -99,11 +101,19 @@ function setCockTimerVal(val){
 }
 
 function sendClockVal(val){
-    chrome.extension.sendMessage({"message": "startTimer", "time": val});
+    chrome.extension.sendMessage({"message": "getTimerTick", "time": val});
 }
 
 function sendCockClockVal(val){
     chrome.extension.sendMessage({"message": "getCockClockVal", "data": val});
+}
+
+function timerIsOn(){
+    chrome.extension.sendMessage({"message": "timerIsOn"});
+}
+
+function timerIsOff(){
+    chrome.extension.sendMessage({"message": "timerIsOff"});
 }
 
 function success(){

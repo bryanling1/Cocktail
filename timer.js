@@ -7,7 +7,6 @@ const minutesTodayRef = document.getElementById('today');
 const statsRef = document.getElementById('stats');
 const statsToggleRef = document.getElementById('stats-icon');
 const backRef = document.getElementById('back-icon');
-let timerInterval = null;
 let timerVal = 10;
 let isVideoPlaying = false;
 let minutesToday = 0;
@@ -116,7 +115,7 @@ function secondsToClockString(time){
 
 
 chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
-    if(req.message == "startTimer"){
+    if(req.message == "getTimerTick"){
         displayTime(req.time);
     }else if(req.message == "displayCocktailTime"){
         displayCockTime(req.data);
@@ -128,6 +127,13 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
         toggleSuccess();
         minutesToday += Math.floor(req.time/60);
         displayMinutesToday()
+        showElementsWhenTimerOff()
+    }else if(req.message == "timerIsOn"){
+        console.log("timer is on")
+        hideElementsWhileTimerOn()
+    }else if(req.message == "timerIsOff"){
+        console.log("timer is off")
+        showElementsWhenTimerOff()
     }
 })
 
@@ -233,6 +239,16 @@ function toggleStats(){
     setWeekVals()
 }
 
+function hideElementsWhileTimerOn(){
+    let selector = document.querySelectorAll(".hide-on-timer");
+    selector.forEach(item=>{
+        item.style.visibility = "hidden";
+    })
+}
 
-
-
+function showElementsWhenTimerOff(){
+    let selector = document.querySelectorAll(".hide-on-timer");
+    selector.forEach(item=>{
+        item.style.visibility = "visible";
+    })
+}
