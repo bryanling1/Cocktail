@@ -129,10 +129,8 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
         displayMinutesToday()
         showElementsWhenTimerOff()
     }else if(req.message == "timerIsOn"){
-        console.log("timer is on")
         hideElementsWhileTimerOn()
     }else if(req.message == "timerIsOff"){
-        console.log("timer is off")
         showElementsWhenTimerOff()
     }
 })

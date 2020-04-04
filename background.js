@@ -1,17 +1,3 @@
-chrome.runtime.onInstalled.addListener(function() {
-    chrome.storage.sync.get("cocktailSeconds", function(data){
-        if(data["cocktailSeconds"] == undefined){
-            chrome.storage.sync.set(
-                {
-                cocktailsMade: 0,
-                allData: {},
-                cocktailSeconds: 0
-            }
-            );
-        }
-    })
-})
-
 let timerInterval = null;
 let cockTimerInterval = null;
 let timerVal = null;
@@ -20,49 +6,6 @@ let cockTimerVal = null;
 let isTimerOn = false;
 let cockReward = null;
 let beverageSet = false;
-
-
-chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
-    if(req.message == "timerButton"){
-        if(isTimerOn == true){
-            isTimerOn = false;
-            timerIsOff()
-            stopClock(timerInterval);
-        }else{
-            timerVal = timerVal;
-            isTimerOn = true;
-            timerIsOn()
-            timerInterval = setInterval(clockDown, 1000);
-        }
-    }else if(req.message == "showTime"){
-        sendClockVal(timerVal);
-    }else if(req.message == "getCockTime"){
-        chrome.storage.sync.get("cocktailSeconds", function(data){
-            chrome.extension.sendMessage({"message": "displayCocktailTime", "data": data["cocktailSeconds"]})
-        });
-    }else if (req.message == "playingVideo"){
-        chrome.storage.sync.get("cocktailSeconds", function(data){
-            cockTimerVal = data["cocktailSeconds"];
-            cockTimerInterval = setInterval(cockClockDown, 1000);
-        });
-    }else if (req.message == "pauseVideo"){
-        if(cockTimerVal){
-            setCockTimerVal(cockTimerVal);
-            stopCockClock();
-        }
-    }
-    else if (req.message == "setBeverage"){
-        if(beverageSet == false){
-            cockReward  = req.cocktailSeconds;
-            timerVal = req.timeUntilReady;
-            initTimerVal = req.timeUntilReady;
-            sendClockVal(timerVal);
-            beverageSet = true;
-        }
-        
-    }
-})
-
 function stopClock(){
     clearInterval(timerInterval);
 }
@@ -166,8 +109,8 @@ function pushSuccessNotification() {
     // want to be respectful there is no need to bother them any more.
   }
 
-  function saveMinutes(minutes){
-    minutes = Math.floor(minutes / 60);
+  function saveMinutes(seconds){
+    minutes = Math.floor(seconds / 60);
     let date = new Date().toDateString();
     let allData = {};
     chrome.storage.sync.get("allData", function(data){
@@ -179,16 +122,67 @@ function pushSuccessNotification() {
         }else{
             allData[date] = minutes;
         }
-    
         chrome.storage.sync.set({'allData': allData});
     })
-    
-
   }
 
 
+//listeners
+chrome.runtime.onInstalled.addListener(function() {
+    chrome.storage.sync.get("cocktailSeconds", function(data){
+        if(data["cocktailSeconds"] == undefined){
+            chrome.storage.sync.set(
+                {
+                cocktailsMade: 0,
+                allData: {},
+                cocktailSeconds: 0
+            }
+            );
+        }
+    })
+})
 
-
-
-
+chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
+    if(req.message == "timerButton"){
+        if(isTimerOn == true){
+            isTimerOn = false;
+            timerIsOff()
+            stopClock(timerInterval);
+        }else{
+            timerVal = timerVal;
+            isTimerOn = true;
+            timerIsOn()
+            timerInterval = setInterval(clockDown, 1000);
+        }
+    }else if(req.message == "showTime"){
+        sendClockVal(timerVal);
+    }else if(req.message == "getCockTime"){
+        chrome.storage.sync.get("cocktailSeconds", function(data){
+            chrome.extension.sendMessage({"message": "displayCocktailTime", "data": data["cocktailSeconds"]})
+        });
+    }else if (req.message == "playingVideo"){
+        chrome.storage.sync.get("cocktailSeconds", function(data){
+            cockTimerVal = data["cocktailSeconds"];
+            cockTimerInterval = setInterval(cockClockDown, 1000);
+        });
+    }else if (req.message == "pauseVideo"){
+        if(cockTimerVal){
+            setCockTimerVal(cockTimerVal);
+            stopCockClock();
+        }
+    }
+    else if (req.message == "setBeverage"){
+        if(beverageSet == false){
+            cockReward  = req.cocktailSeconds;
+            timerVal = req.timeUntilReady;
+            initTimerVal = req.timeUntilReady;
+            sendClockVal(timerVal);
+            beverageSet = true;
+        }
+        
+    }
+    else if (req.message == "isTimerOn"){
+        sendResponse({"message": isTimerOn})
+    }
+})
 
