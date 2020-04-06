@@ -5,13 +5,13 @@
     "permissions": ["storage", "declarativeContent", "activeTab", "*://*/*", "tabs","notifications"], 
     "options_page": "options.html",
     "background": {
-        "scripts": ["background.js"],
+        "scripts": ["./js/background.js"],
         "persistent": false
     },
     "content_scripts": [ 
         {
         "matches": ["http://*/*","https://*/*"],
-        "js": ["timer.js"]
+        "js": ["./js/timer.js", "./js/data.js"]
     }],
 
     "browser_action":{

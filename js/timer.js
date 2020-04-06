@@ -4,8 +4,6 @@ const cockTimeRef = document.getElementById('cockTime');
 const successButtonRef = document.getElementById('successButton');
 const successScreenRef = document.getElementById('successScreen');
 const minutesTodayRef = document.getElementById('today');
-const statsRef = document.getElementById('stats');
-const statsToggleRef = document.getElementById('stats-icon');
 const backRef = document.getElementById('back-icon');
 let timerVal = 10;
 let isVideoPlaying = false;
@@ -28,13 +26,6 @@ successButtonRef ? (successButtonRef.onclick = function(){
     setBeverage();
 }):(null);
 
-statsToggleRef ? (statsToggleRef.onclick = function(){
-    toggleStats();
-}):(null);
-
-backRef ? (backRef.onclick = function(){
-    toggleStats();
-}):(null);
 
 function timerButton(){
     chrome.extension.sendMessage({"message":"timerButton", "time": timerVal});
@@ -170,72 +161,6 @@ function displayMinutesToday(){
     minutesTodayRef.innerHTML = minutesToday+" mins Today"
 }
 
-setBeverage();
-getCurrentTime();
-getCockTime();
-getMinutesToday();
-displayMinutesToday();
-
-//////////////////////////////////////For the graph///////////////////////////////////
-let weekData = [{}, {}, {}, {}, {}, {}, {}]
-
-function setCurrentWeekDates(){
-    dateToday = new Date();
-    index = dateToday.getDay();
-    //set days before
-    for(let i=0;i<=index;i++){
-        date = new Date();
-        dateI = date.getDay()
-        date.setDate(date.getDate() - i);
-        weekData[dateI - i]["date"] = date;
-    }
-    //set days after
-    for(let i=1;i<7-index;i++){
-        date = new Date();
-        dateI = date.getDay()
-        date.setDate(date.getDate() + i);
-        weekData[dateI + i]["date"] = date;
-    }
-}
-
-function setWeekVals(){
-    let largestVal = 0;
-    let allData = null;
-    chrome.storage.sync.get("allData", function(data){
-        if(data){
-            allData = data['allData'];
-            //get the largest value as reference
-            for(let i=0; i<7; i++){
-                let date = weekData[i]["date"].toDateString();
-                //set minute value
-                weekData[i]["minutes"] = allData[date] ? (allData[date]):(0);
-                if(allData[date] > largestVal){
-                    largestVal = allData[date];
-                }
-            }
-            if(largestVal == 0){
-                largestVal = 1000000;
-            }
-            //display
-            const weekChartRef = document.querySelectorAll(".week .bars .column .val");
-            weekChartRef.forEach((item, i)=>{
-                console.log(weekData[i]['minutes'] / largestVal)
-                item.style.height = Math.floor(weekData[i]['minutes'] / largestVal * 100).toString()+"%";
-                if(weekData[i]['minutes'] > 0){
-                    item.querySelector(".text").innerHTML = weekData[i]['minutes'];
-                } 
-            })
-
-            
-        }
-    })
-}
-
-function toggleStats(){
-    statsRef.classList.toggle("hideStats");
-    setCurrentWeekDates()
-    setWeekVals()
-}
 
 function hideElementsWhileTimerOn(){
     let selector = document.querySelectorAll(".hide-on-timer");
@@ -250,3 +175,10 @@ function showElementsWhenTimerOff(){
         item.style.visibility = "visible";
     })
 }
+
+setBeverage();
+getCurrentTime();
+getCockTime();
+getMinutesToday();
+displayMinutesToday();
+

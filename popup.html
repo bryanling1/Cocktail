@@ -7,15 +7,17 @@
   <body>
     <div id="stats" class="hideStats">
       <img id="back-icon" class="icon back-icon" src="./images/right-arrow.png"/>
+      <img id="left-arrow" src="./images/leftArrow.svg"/>
+      <img id="right-arrow" src="./images/leftArrow.svg"/>
       <div class="chart week">
         <div class="bars">
-          <div class="column"><div class="val"><div class="text"></div></div></div>
-          <div class="column"><div class="val"><div class="text"></div></div></div>
-          <div class="column"><div class="val"><div class="text"></div></div></div>
-          <div class="column"><div class="val"><div class="text"></div></div></div>
-          <div class="column"><div class="val"><div class="text"></div></div></div>
-          <div class="column"><div class="val"><div class="text"></div></div></div>
-          <div class="column"><div class="val"><div class="text"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
         </div>
         <div class="days bold-text">
           <div>S</div>
@@ -25,6 +27,9 @@
           <div>T</div>
           <div>F</div>
           <div>S</div>
+        </div>
+        <div id="data-date" class="data-small-font "> 
+          This is the week date string thing
         </div>
       </div>
     </div>
@@ -40,6 +45,7 @@
     <h1 id="clock"></h1>
     <img class="pointsIcon hide-on-timer" src="./images/drink-icon.png"/>
     <div class="pointsText hide-on-timer" id="cockTime"></div>
-    <script src="timer.js"></script>
+    <script src="/js/timer.js"></script>
+    <script src="/js/data.js"></script>
   </body>
 </html>

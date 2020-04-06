@@ -185,4 +185,3 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
         sendResponse({"message": isTimerOn})
     }
 })
-
