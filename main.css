@@ -72,7 +72,7 @@
 
   .chart{
       width: 75%;
-      height: 65%;
+      height: 70%;
       display: block;
       margin: 12.5%;
       margin-bottom: 30px;
@@ -127,12 +127,12 @@
     text-align: center;
     position: relative;
     top: -18px;
-    opacity: 0;
-    animation-name: reveal;
+    /* opacity: 0; */
+    /* animation-name: reveal;
     animation-duration: 0.2s;
     animation-delay: 1s;
     animation-fill-mode: forwards;
-    animation-timing-function: ease;
+    animation-timing-function: ease; */
 }
 
 @keyframes reveal{
@@ -155,7 +155,7 @@
 }
 
 .icon{
-    width: 17px;
+    width: 25px;
     cursor: pointer;
     padding: 7px;
 }
@@ -170,10 +170,28 @@
     left: 0;
 }
 
+.week-icon{
+    position: relative;
+    top: 0;
+}
+.month-icon{
+    position: relative;
+    top: 0;
+}
+.years-icon{
+    position: relative;
+    top: 0;
+}
 .back-icon{
     position: absolute;
     top: 0;
     right: 0;
+}
+.data-icon-times{
+    position: relative;
+    display: block;
+    margin: auto;
+    width: 122px;
 }
 
 .bold-text{

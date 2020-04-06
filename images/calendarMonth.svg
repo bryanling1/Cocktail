@@ -1,0 +1,38 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 81.25 84.96">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #3d3d3d;
+        stroke-miterlimit: 10;
+        stroke-width: 5px;
+      }
+
+      .cls-2 {
+        fill: #3d3d3d;
+      }
+    </style>
+  </defs>
+  <title>calendarMonth</title>
+  <g>
+    <rect class="cls-1" x="2.5" y="6.21" width="76.25" height="76.25" rx="11.58" ry="11.58"/>
+    <path class="cls-1" d="M-506.34,2010.56" transform="translate(508.51 -1992.77)"/>
+    <line class="cls-1" x1="2.16" y1="28.41" x2="78.41" y2="28.41"/>
+    <g>
+      <line class="cls-1" x1="26.29" x2="26.29" y2="12.87"/>
+      <line class="cls-1" x1="54.96" x2="54.96" y2="12.87"/>
+    </g>
+    <g>
+      <rect class="cls-2" x="57.53" y="50.5" width="10.25" height="10.25"/>
+      <rect class="cls-2" x="42.61" y="50.5" width="10.25" height="10.25"/>
+      <rect class="cls-2" x="27.69" y="50.5" width="10.25" height="10.25"/>
+      <rect class="cls-2" x="42.61" y="63.78" width="10.25" height="10.25"/>
+      <rect class="cls-2" x="27.69" y="63.78" width="10.25" height="10.25"/>
+      <rect class="cls-2" x="12.77" y="63.78" width="10.25" height="10.25"/>
+      <rect class="cls-2" x="57.77" y="35.74" width="10.25" height="10.25"/>
+      <rect class="cls-2" x="42.84" y="35.74" width="10.25" height="10.25"/>
+      <rect class="cls-2" x="27.92" y="35.74" width="10.25" height="10.25"/>
+      <rect class="cls-2" x="12.77" y="50.5" width="10.25" height="10.25"/>
+    </g>
+  </g>
+</svg>

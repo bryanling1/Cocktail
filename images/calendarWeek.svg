@@ -1,0 +1,30 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 81.25 84.96">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #3d3d3d;
+        stroke-miterlimit: 10;
+        stroke-width: 5px;
+      }
+
+      .cls-2 {
+        font-size: 43.31px;
+        fill: #3d3d3d;
+        font-family: Barlow;
+        font-weight: 700;
+      }
+    </style>
+  </defs>
+  <title>calendarWeek</title>
+  <g>
+    <rect class="cls-1" x="2.5" y="6.21" width="76.25" height="76.25" rx="11.58" ry="11.58"/>
+    <path class="cls-1" d="M-372.2,2010.56" transform="translate(374.36 -1992.77)"/>
+    <line class="cls-1" x1="2.16" y1="28.41" x2="78.41" y2="28.41"/>
+    <g>
+      <line class="cls-1" x1="26.29" x2="26.29" y2="12.87"/>
+      <line class="cls-1" x1="54.96" x2="54.96" y2="12.87"/>
+    </g>
+    <text class="cls-2" transform="translate(29.88 66.86)">7</text>
+  </g>
+</svg>
