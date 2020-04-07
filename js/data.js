@@ -1,4 +1,10 @@
+
+document.addEventListener('DOMContentLoaded', (event) => {
+//menus
 const statsRef = document.getElementById('stats');
+const homeRef = document.getElementById('home');
+const barRef = document.getElementById('bar');
+
 const statsToggleRef = document.getElementById('stats-icon');
 const dataDateRef = document.getElementById('data-date');
 const leftArrowRef = document.getElementById('left-arrow');
@@ -11,6 +17,11 @@ const weekIconRef =  document.getElementById('week-icon');
 const yearRef =  document.querySelector('.stats-year');
 const monthRef =  document.querySelector('.stats-month');
 const weekRef =  document.querySelector('.stats-week');
+const statsMenuRef =  document.getElementById('stats-menu-icon');
+const homeMenuRef =  document.getElementById('home-menu-icon');
+const barMenuRef =  document.getElementById('bar-menu-icon');
+const menuSelectorRef =  document.getElementById('selector');
+
 let weekData = [{}, {}, {}, {}, {}, {}, {}]
 let monthData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
 let dateIRange = new Date;
@@ -20,25 +31,14 @@ statsToggleRef ? (statsToggleRef.onclick = function(){
     toggleStats();
 }):(null);
 
-backRef ? (backRef.onclick = function(){
-    toggleStats();
-}):(null);
 
-backRef ? (leftArrowRef.onclick = function(){
+leftArrowRef.onclick = function(){
     leftArrowClick();
-}):(null);
+}
 
-backRef ? (rightArrowRef.onclick = function(){
+rightArrowRef.onclick = function(){
     rightArrowClick();
-}):(null);
-
-backRef ? (leftArrowRef.onclick = function(){
-    leftArrowClick();
-}):(null);
-
-backRef ? (rightArrowRef.onclick = function(){
-    rightArrowClick();
-}):(null);
+}
 
 leftArrowMonthRef.onclick = function(){
     leftArrowMonthClick();
@@ -46,6 +46,25 @@ leftArrowMonthRef.onclick = function(){
 
 rightArrowMonthRef.onclick = function(){
     rightArrowMonthClick();
+}
+
+homeMenuRef.onclick = function(){
+    menuSelectorRef.style.left = '132px';
+    statsRef.style.display = "none";
+    homeRef.style.display = "block";
+    barRef.style.display = "none";
+}
+statsMenuRef.onclick = function(){
+    menuSelectorRef.style.left = '33px';
+    statsRef.style.display = "block";
+    homeRef.style.display = "none";
+    barRef.style.display = "none";
+}
+barMenuRef.onclick = function(){
+    menuSelectorRef.style.left = '232px';
+    statsRef.style.display = "none";
+    homeRef.style.display = "none";
+    barRef.style.display = "block";
 }
 
 monthIconRef.onclick=function(){
@@ -162,15 +181,6 @@ function rightArrowClick(){
 }
 
 
-function toggleStats(){
-    statsRef.classList.toggle("hideStats");
-    setCurrentWeekDates(dateIRange);
-    setWeekVals();
-    displayDateRange();
-    setArrowColors();
-}
-
-
 function getDaysInMonth(year, month){
     return new Date(year, month, 0).getDate();
 }
@@ -257,12 +267,14 @@ function rightArrowMonthClick(){
     }
 }
 
-
+setCurrentWeekDates(dateIRange);
+setWeekVals();
+displayDateRange();
+setArrowColors();
 setCurrentMonthDates()
 setMonthVals()
 displayMonthRange()
 setArrowColorsMonth()
 
-console.log(monthData)
 
-
+})

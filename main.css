@@ -6,25 +6,29 @@
   h1{
       text-align: center;
   }
+
+  body{
+      background-color: white;
+  }
   #clock{
       margin-top: 10px;
   }
+  
   .cocktailIcon{
-      height: 90px;
-      width: 90px;
+      height: 130px;
+      width: 130px;
       display: block;
       margin: auto;
       cursor: pointer;
-      border-radius: 100%;
       background-image: url("./images/default.gif");
-      background-size: 260%;
+      background-size: 250%;
       background-position: 48% center;
   }
   .main{
       width: 300px;
-      background-color: #3498db;
-      color: white;
+      background-color: white;
       height: 300px;
+      display: block;
 
   }
   .pointsIcon{
@@ -39,9 +43,9 @@
   .pointsText{
       font-size: 14px;
       display: inline-block;
-      position: relative;
-      left: 4px;
-      top: -3px;
+      position: absolute;
+      left: 32px;
+      top: 8px;
   }
 
   .success{
@@ -64,10 +68,10 @@
   #stats{
       height: 100%;
       width: 100%;
-      position: fixed;
+      position: relative;
       background-color: #ededed;
       z-index: 10;
-      
+      display: none;
   }
 
   .chart{
@@ -148,12 +152,6 @@
     }
 }
 
-
-#today{
-    font-weight: normal;
-    font-size: 14px;
-}
-
 .hideStats{
     display: none;
 }
@@ -166,8 +164,26 @@
     position: relative;
 }
 
+.cocktail-icon{
+    width: 27px;
+    height: 27px;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+}
+
 .icon:hover{
     background-color: rgba(0,0,0,0.1);
+}
+
+#home{
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    background-image: url("./images/table.svg");
+    background-size: 105%;
+    background-repeat: no-repeat;
+    background-position: center bottom;
 }
 
 .stats-icon{
@@ -237,3 +253,34 @@
 }
 
 
+.nav{
+    display: flex;
+    width: 100%;
+    height: 45px;
+    background-color: white;
+}
+
+.nav-button{
+    height: 100%;
+    padding-top: 5px;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.nav-button .icon{
+    background-color: white;
+    margin: auto;
+    display: block;
+    position: relative;
+}
+
+#selector{
+    width: 35px;
+    height: 3px;
+    background-color: #3d3d3d;
+    position: absolute;
+    bottom: 0;
+    left: 132px;
+    z-index: 10;
+    transition: left ease 0.26s;
+}

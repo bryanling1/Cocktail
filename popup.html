@@ -7,14 +7,13 @@
   <body>
     <div class="main">
       <!-- Stats -->
-    <div id="stats" class="hideStats">
+    <div id="stats">
       <div class="data-icon-times">
         <img class="icon" id="year-icon" src="./images/calendarYear.svg"/>
         <img class="icon" id="month-icon" src="./images/calendarMonth.svg"/>
         <img class="icon selected-data-mode" id="week-icon" src="./images/calendarWeek.svg"/>
       </div>
       
-      <img id="back-icon" class="icon back-icon" src="./images/right-arrow.png"/>
 
       <!-- Week -->
       <div class="stats-week">
@@ -102,6 +101,7 @@
 
     </div>
 
+    <div id="home">
     <!-- Success Reset-->
     <div id="successScreen" class="success success-off">
       Congrats!<br/>
@@ -109,16 +109,28 @@
     </div>
 
 
+    <br/> <br/> <br/>
+    <h1 id="today" class="hide-on-timer bold-text">0mins Today</h1>
     <br/>
-    <h1 id="today" class="hide-on-timer">0mins Today</h1>
-    <br/>
-    <img id="stats-icon" class="icon stats-icon hide-on-timer" src="./images/statsIcon.png"/>
-    <img id="timerToggle" class="cocktailIcon"/>
-    <h1 id="clock"></h1>
-    <img class="pointsIcon hide-on-timer" src="./images/drink-icon.png"/>
-    <div class="pointsText hide-on-timer" id="cockTime"></div>
-    <script src="/js/timer.js"></script>
-    <script src="/js/data.js"></script>
+    <div id="timerToggle" class="cocktailIcon"></div>
+    <h1 id="clock" class="bold-text"></h1>
+    <img class="cocktail-icon pointsIcon hide-on-timer" src="./images/cocktail-icon.svg"/>
+    <div class="pointsText hide-on-timer bold-text" id="cockTime"></div>
+    
   </div>
+</div>
+<div id="bar">
+
+
+</div>
+
+  <div class="nav">
+    <div id="selector"></div>
+    <div class="nav-button"><img class="icon" id="stats-menu-icon" src="./images/stats-icon.svg"/></div>
+    <div class="nav-button"><img class="icon" id="home-menu-icon" src="./images/home-icon.svg"/></div>
+    <div class="nav-button"><img class="icon" id="bar-menu-icon" src="./images/bar-icon.svg"/></div>
+  </div>
+  <script src="/js/timer.js"></script>
+    <script src="/js/data.js"></script>
   </body>
 </html>

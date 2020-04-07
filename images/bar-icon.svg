@@ -1,0 +1,25 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72.98 72.62">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #3d3d3d;
+      }
+
+      .cls-2 {
+        font-size: 24.43px;
+        fill: #fff;
+        font-family: Barlow;
+        font-weight: 700;
+      }
+
+      .cls-3 {
+        letter-spacing: -1px;
+      }
+    </style>
+  </defs>
+  <title>bar-icon</title>
+  <g>
+    <path class="cls-1" d="M1330,1446.19v-7.3h-65.68v-9.2H1257v72.62h7.3v-56.12H1278v9.16h-9.92v27.35h59.65v-27.35h-9.14v-9.16H1330Zm-13.58,9.16h-36.06v-9.16h36.06v9.16Z" transform="translate(-1256.98 -1429.69)"/>
+    <text class="cls-2" transform="translate(17.99 47.95)"><tspan class="cls-3">B</tspan><tspan x="14.02" y="0">AR</tspan></text>
+  </g>
+</svg>
