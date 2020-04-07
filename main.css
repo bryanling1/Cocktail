@@ -20,7 +20,7 @@
       background-size: 260%;
       background-position: 48% center;
   }
-  body{
+  .main{
       width: 300px;
       background-color: #3498db;
       color: white;
@@ -122,17 +122,21 @@
     
 }
 
+
+
+.month .bars .column{
+    margin: 1px;
+}
+
 .text{
     color: #3d3d3d;
     text-align: center;
     position: relative;
     top: -18px;
-    /* opacity: 0; */
-    /* animation-name: reveal;
-    animation-duration: 0.2s;
-    animation-delay: 1s;
-    animation-fill-mode: forwards;
-    animation-timing-function: ease; */
+}
+
+.month .text{
+    left: -4px;
 }
 
 @keyframes reveal{
@@ -158,6 +162,8 @@
     width: 25px;
     cursor: pointer;
     padding: 7px;
+    margin: -1px;
+    position: relative;
 }
 
 .icon:hover{
@@ -170,18 +176,6 @@
     left: 0;
 }
 
-.week-icon{
-    position: relative;
-    top: 0;
-}
-.month-icon{
-    position: relative;
-    top: 0;
-}
-.years-icon{
-    position: relative;
-    top: 0;
-}
 .back-icon{
     position: absolute;
     top: 0;
@@ -207,11 +201,12 @@
     font-weight: 400;
 }
 
-#data-date{
+#data-date, #data-date-month{
     line-height: 30px;
 }
 
-#left-arrow{
+
+#left-arrow, #left-arrow-month{
     width: 11px;
     cursor: pointer;
     position: absolute;
@@ -219,7 +214,7 @@
     top: 50%;
 }
 
-#right-arrow{
+#right-arrow, #right-arrow-month{
     width: 11px;
     cursor: pointer;
     position: absolute;
@@ -231,6 +226,14 @@
 .disabled-arrow{
     cursor: default!important;
     opacity: 0.2;
+}
+
+.hide-stats-type{
+    display: none;
+}
+
+.selected-data-mode{
+    background-color: rgba(0,0,0,0.1)
 }
 
 

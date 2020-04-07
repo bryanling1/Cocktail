@@ -5,17 +5,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap" rel="stylesheet">
   </head>
   <body>
+    <div class="main">
+      <!-- Stats -->
     <div id="stats" class="hideStats">
       <div class="data-icon-times">
-        <img class="icon year-icon" src="./images/calendarYear.svg"/>
-        <img class="icon month-icon" src="./images/calendarMonth.svg"/>
-        <img class="icon week-icon" src="./images/calendarWeek.svg"/>
+        <img class="icon" id="year-icon" src="./images/calendarYear.svg"/>
+        <img class="icon" id="month-icon" src="./images/calendarMonth.svg"/>
+        <img class="icon selected-data-mode" id="week-icon" src="./images/calendarWeek.svg"/>
       </div>
       
       <img id="back-icon" class="icon back-icon" src="./images/right-arrow.png"/>
+
+      <!-- Week -->
+      <div class="stats-week">
       <img id="left-arrow" src="./images/leftArrow.svg"/>
       <img id="right-arrow" src="./images/leftArrow.svg"/>
-      <div class="chart week">
+      <div class="chart  week">
         <div class="bars">
           <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
           <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
@@ -39,10 +44,71 @@
         </div>
       </div>
     </div>
+     <!-- Month -->
+     <div class="stats-month hide-stats-type">
+      <img id="left-arrow-month" src="./images/leftArrow.svg"/>
+      <img id="right-arrow-month" src="./images/leftArrow.svg"/>
+      <div class="chart  month">
+        <div class="bars">
+          <!-- month bars set -->
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+          <div class="column"><div class="val"><div class="text data-small-font"></div></div></div>
+        </div>
+        <div class="days bold-text">
+          <div>1</div>
+          <div>5</div>
+          <div>10</div>
+          <div>15</div>
+          <div>20</div>
+          <div>25</div>
+          <div>30</div>
+        </div>
+        <div id="data-date-month" class="data-small-font "> 
+          This is the week date string thing
+        </div>
+      </div>
+    </div>
+    <!-- YEAR -->
+    <div class="stats-year hide-stats-type">year</div>
+
+    </div>
+
+    <!-- Success Reset-->
     <div id="successScreen" class="success success-off">
       Congrats!<br/>
       <button id="successButton">OK</button>
     </div>
+
+
     <br/>
     <h1 id="today" class="hide-on-timer">0mins Today</h1>
     <br/>
@@ -53,5 +119,6 @@
     <div class="pointsText hide-on-timer" id="cockTime"></div>
     <script src="/js/timer.js"></script>
     <script src="/js/data.js"></script>
+  </div>
   </body>
 </html>
