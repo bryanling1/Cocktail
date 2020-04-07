@@ -9,8 +9,12 @@ const statsToggleRef = document.getElementById('stats-icon');
 const dataDateRef = document.getElementById('data-date');
 const leftArrowRef = document.getElementById('left-arrow');
 const rightArrowRef = document.getElementById('right-arrow');
+
 const leftArrowMonthRef = document.getElementById('left-arrow-month');
 const rightArrowMonthRef = document.getElementById('right-arrow-month');
+const leftArrowYearRef = document.getElementById('left-arrow-year');
+const rightArrowYearRef = document.getElementById('right-arrow-year');
+
 const yearIconRef =  document.getElementById('year-icon');
 const monthIconRef =  document.getElementById('month-icon');
 const weekIconRef =  document.getElementById('week-icon');
@@ -24,8 +28,10 @@ const menuSelectorRef =  document.getElementById('selector');
 
 let weekData = [{}, {}, {}, {}, {}, {}, {}]
 let monthData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+let yearData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
 let dateIRange = new Date;
 let dateIRangeMonth = new Date;
+let dateIRangeYear = new Date;
 
 statsToggleRef ? (statsToggleRef.onclick = function(){
     toggleStats();
@@ -46,6 +52,14 @@ leftArrowMonthRef.onclick = function(){
 
 rightArrowMonthRef.onclick = function(){
     rightArrowMonthClick();
+}
+
+leftArrowYearRef.onclick = function(){
+    leftArrowYearClick();
+}
+
+rightArrowYearRef.onclick = function(){
+    rightArrowYearClick();
 }
 
 homeMenuRef.onclick = function(){
@@ -253,7 +267,6 @@ function leftArrowMonthClick(){
     setMonthVals()
     displayMonthRange()
     setArrowColorsMonth()
-   
 }
 
 function rightArrowMonthClick(){
@@ -267,6 +280,93 @@ function rightArrowMonthClick(){
     }
 }
 
+function setCurrentYearDates(){
+    let date = new Date(dateIRangeYear.getFullYear(), 0, 1);
+    let datei = new Date(dateIRangeYear.getFullYear(), 0, 1);
+    yearData[0]["date"] = datei;
+    for (let i=1; i<12; i++){
+        datei = date.setMonth(date.getMonth() + 1)
+        yearData[i]["date"] = new Date(datei);
+    }
+}
+
+function setYearVals(){
+    let largestVal = 0;
+    let allData = null;
+    chrome.storage.sync.get("allData", function(data){
+        if(data){
+            allData = data['allData'];
+            //get the largest value as reference
+            for(let i=0; i<12; i++){
+                let date = yearData[i]["date"].toDateString().split(" ")[1]+yearData[i]["date"].toDateString().split(" ")[3];
+                //set minute value
+                yearData[i]["minutes"] = allData[date] ? (allData[date]):(0);
+                if(allData[date] > largestVal){
+                    largestVal = allData[date];
+                }
+            }
+            if(largestVal == 0){
+                largestVal = 1000000;
+            }
+            //display
+            const yearChartRef = document.querySelectorAll(".year .bars .column .val");
+            yearChartRef.forEach((item, i)=>{
+                item.style.height = Math.floor(yearData[i]['minutes'] / largestVal * 100).toString()+"%";
+                if(yearData[i]['minutes'] > 0){
+                    item.querySelector(".text").innerHTML = yearData[i]['minutes'];
+                }else{
+                    item.querySelector(".text").innerHTML = "";
+                }
+            })
+
+            
+        }
+    })
+}
+
+function displayYearRange(){
+    const DateMonthRef = document.getElementById("data-date-year");
+    DateMonthRef.innerHTML = dateIRangeYear.toDateString().split(" ")[3];
+}
+
+function setArrowColorsYear(){
+    if(new Date().getTime() - dateIRangeYear.getTime() <= 24*3600*1000 * days_of_a_year(dateIRangeYear.getFullYear())){
+        rightArrowYearRef.classList.add("disabled-arrow")
+    }else{
+        rightArrowYearRef.classList.remove("disabled-arrow")
+    }
+}
+
+function leftArrowYearClick(){
+    dateIRangeYear = new Date(dateIRangeYear.getTime() - 24*3600*1000*days_of_a_year(dateIRangeYear.getFullYear()));
+    setCurrentYearDates()
+    setYearVals()
+    displayYearRange()
+    setArrowColorsYear()
+}
+
+function rightArrowYearClick(){
+    if(new Date().getTime() - dateIRangeYear.getTime() > 24*3600*1000*days_of_a_year(dateIRangeYear.getFullYear())){
+        dateIRangeYear = new Date(dateIRangeYear.getTime() + 24*3600*1000*days_of_a_year(dateIRangeYear.getFullYear()));
+        setCurrentYearDates()
+        setYearVals()
+        displayYearRange()
+        setArrowColorsYear()
+    }
+}
+
+function days_of_a_year(year) 
+{
+   
+  return isLeapYear(year) ? 366 : 365;
+}
+
+function isLeapYear(year) {
+     return year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0);
+}
+
+
+
 setCurrentWeekDates(dateIRange);
 setWeekVals();
 displayDateRange();
@@ -275,6 +375,12 @@ setCurrentMonthDates()
 setMonthVals()
 displayMonthRange()
 setArrowColorsMonth()
+
+setCurrentYearDates()
+setYearVals()
+displayYearRange()
+setArrowColorsYear()
+
 
 
 })

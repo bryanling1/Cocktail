@@ -112,6 +112,7 @@ function pushSuccessNotification() {
   function saveMinutes(seconds){
     minutes = Math.floor(seconds / 60);
     let date = new Date().toDateString();
+    let date2 = date.split(" ")[1]+date.split(" ")[3];
     let allData = {};
     chrome.storage.sync.get("allData", function(data){
         if(data){
@@ -121,6 +122,12 @@ function pushSuccessNotification() {
             allData[date] += minutes;
         }else{
             allData[date] = minutes;
+        }
+        //for the whole month
+        if(date2 in allData){
+            allData[date2] += minutes;
+        }else{
+            allData[date2] = minutes;
         }
         chrome.storage.sync.set({'allData': allData});
     })
@@ -185,3 +192,6 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
         sendResponse({"message": isTimerOn})
     }
 })
+
+
+saveMinutes(30*60);
