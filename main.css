@@ -158,16 +158,16 @@
 }
 
 .icon{
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
     padding: 7px;
     position: relative;
 }
 
 .cocktail-icon{
-    width: 27px;
-    height: 27px;
+    width: 22px;
+    height: 22px;
     cursor: pointer;
     position: absolute;
     top: 5px;
@@ -202,7 +202,7 @@
     position: relative;
     display: flex;
     margin: auto;
-    width: 122px;
+    justify-content: center;
 }
 
 .bold-text{
@@ -261,8 +261,9 @@
 .nav{
     display: flex;
     width: 100%;
-    height: 45px;
+    height: 37px;
     background-color: white;
+    
 }
 
 .nav-button{
