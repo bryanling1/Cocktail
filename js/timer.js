@@ -5,25 +5,37 @@ const successButtonRef = document.getElementById('successButton');
 const successScreenRef = document.getElementById('successScreen');
 const minutesTodayRef = document.getElementById('today');
 const backRef = document.getElementById('back-icon');
+const cocktailIconRef = document.getElementById('cocktail-icon-text');
+const timerIconRef = document.getElementById('timer-icon-text');
+const cashIconRef = document.getElementById('cash-icon-text');
+const cardNameRef =  document.querySelector('.card-name');
+const cardXPRef = document.getElementById('card-xp-text');
+const cardProgress = document.querySelector(".progress");
+const cardPlayButtonRef = document.querySelector("#card-play-button");
+const cardRef = document.querySelector(".cocktail-card-wrapper");
+const menuSelectorRef =  document.getElementById('selector');
+//level progress
+const dataColumns = document.querySelectorAll(".bars .column .val")
+
 let timerVal = 10;
 let isVideoPlaying = false;
 let minutesToday = 0;
-let cocktails = [
-    {
-        "name": "first",
-        "cocktailSeconds": 300,
-        "timeUntilReady": 1200
-    }
-]
-let cocktailsIndex = 0;
 
 playButtonRef ? (playButtonRef.onclick = function(){
     timerButton();
+    cardRef.style.display = "none";
+    minutesTodayRef.style.display = "none"
 }):(null);
 
-successButtonRef ? (successButtonRef.onclick = function(){
+playButtonRef ? (successButtonRef.onclick = function(){
     toggleSuccess();
     setBeverage();
+}):(null);
+
+cardPlayButtonRef ? (cardPlayButtonRef.onclick = function(){
+    timerButton();
+    cardRef.style.display = "none";
+    minutesTodayRef.style.display = "none"
 }):(null);
 
 
@@ -48,16 +60,104 @@ function getCockTime(){
 }
 
 function setBeverage(){
-    chrome.extension.sendMessage({
-        "message":"setBeverage", 
-        "name": cocktails[cocktailsIndex]["name"],
-        "cocktailSeconds": cocktails[cocktailsIndex]["cocktailSeconds"],
-        "timeUntilReady": cocktails[cocktailsIndex]["timeUntilReady"],
-    });
+    chrome.storage.sync.get(['cocktailSet','cocktails'], function(data){
+        const name = data['cocktailSet']
+        const cocktailSeconds =  data["cocktails"][data['cocktailSet']]["cocktailSeconds"]
+        const timeUntilReady = data["cocktails"][data['cocktailSet']]["timeUntilReady"]
+        const cash = data["cocktails"][data['cocktailSet']]["cashPrize"]
+        const uses = data["cocktails"][data['cocktailSet']]["uses"]
+        chrome.extension.sendMessage({
+            "message":"setBeverage", 
+            "name": name,
+            "cocktailSeconds": cocktailSeconds,
+            "timeUntilReady": timeUntilReady,
+        });
+        cocktailIconRef.innerHTML = cocktailSeconds;
+        timerIconRef.innerHTML = timeUntilReady;
+        cashIconRef.innerHTML = cash;
+        cardXPRef.innerHTML = uses*timeUntilReady;
+        cardNameRef.innerHTML = name;
+        cardProgress.style.setProperty('--percent', getLevelProgress(uses));
+        setLevelColors(getLevelColor(uses));
+    })
+}
+
+function getLevelProgress(uses){
+    const level1 = 10
+    const level2 = 25
+    const level3 = 100
+    const level4 = 250
+    const level5 = 500
+    const level6 = 1000
+
+    if(uses < level1){
+        return uses / level1 * 100;
+    }else if (uses >= level1 && uses < level1 + level2){
+        return (uses - level1)  / level2 * 100;
+    }
+    else if (uses >= level1 + level2 && uses < level1 + level2 + level3){
+        return (uses - level1 -level2)  / level3 * 100;
+    }
+    else if (uses >= level1 + level2 + level3 && uses < level1 + level2 + level3 + level4){
+        return (uses - level1 -level2 -level3)  / level4 * 100;
+    }
+    else if (uses >= level1 + level2 + level3 + level4 && uses < level1 + level2 + level3 + level4 + level5){
+        return (uses - level1 -level2 -level3 -level4)  / level5 * 100;
+    }
+    else if (level1 + level2 + level3 + level4 + level5 >= 500 && uses < level1 + level2 + level3 + level4 + level5 + level6){
+        return (uses - level1 -level2 -level3 -level4 - level5)  / level6 * 100;
+    }
+    else if (uses >= level1 + level2 + level3 + level4 + level5 + level6){
+        return 100
+    }
+}
+
+function getLevelColor(uses){
+    const level1 = 10
+    const level2 = 25
+    const level3 = 100
+    const level4 = 250
+    const level5 = 500
+    const level6 = 1000
+
+    if(uses < level1){
+        return "#6d6d6d"
+    }else if (uses >= level1 && uses < level1 + level2){
+        return "#0984e3"
+    }
+    else if (uses >= level1 + level2 && uses < level1 + level2 + level3){
+        return "#6c5ce7"
+    }
+    else if (uses >= level1 + level2 + level3 && uses < level1 + level2 + level3 + level4){
+        return "#cc2152"
+    }
+    else if (uses >= level1 + level2 + level3 + level4 && uses < level1 + level2 + level3 + level4 + level5){
+        return "#d67047"
+    }
+    else if (level1 + level2 + level3 + level4 + level5 >= 500 && uses < level1 + level2 + level3 + level4 + level5 + level6){
+        return "#b2c4d3"
+    }
+    else if (uses >= level1 + level2 + level3 + level4 + level5 + level6){
+        return "#ffd00b"
+    }
+}
+
+function setLevelColors(color){
+    menuSelectorRef.style.backgroundColor = color;
+    cardPlayButtonRef.style.backgroundColor = color;
+    cardNameRef.style.color = color;
+    cardProgress.style.stroke = color;
+    cardXPRef.style.color = color;
+    dataColumns.forEach(function(item){
+        item.style.backgroundColor = color
+    })
+
 }
 
 function toggleSuccess(){
     successScreenRef.classList.toggle("success-off");
+    cardRef.style.display = "initial";
+    minutesTodayRef.style.display = "block"
 }
 
 function secondsToClockString(time){
@@ -108,6 +208,14 @@ function secondsToClockString(time){
 chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
     if(req.message == "getTimerTick"){
         displayTime(req.time);
+        //hide the card if the timer is paused
+        chrome.storage.sync.get(["cocktailSet", "cocktails"], function(data){
+            const name = data["cocktailSet"]
+            if(data["cocktails"][name]['timeUntilReady'] !== req.time && req.time !== 0 && req.time !== null){
+                cardRef.style.display = "none";
+                minutesTodayRef.style.display = "none"
+            }
+        })
     }else if(req.message == "displayCocktailTime"){
         displayCockTime(req.data);
     }else if (req.message == "getCockClockVal"){
@@ -165,20 +273,31 @@ function displayMinutesToday(){
 function hideElementsWhileTimerOn(){
     let selector = document.querySelectorAll(".hide-on-timer");
     selector.forEach(item=>{
-        item.style.visibility = "hidden";
+        item.style.display = "none";
     })
 }
 
 function showElementsWhenTimerOff(){
     let selector = document.querySelectorAll(".hide-on-timer");
     selector.forEach(item=>{
-        item.style.visibility = "visible";
+        item.style.display = "block";
     })
 }
+
+function checkClockToHideElements(){
+    chrome.extension.sendMessage({"message":"isTimerOn"}, function(res){
+        console.log(res.message)
+        if(res.message){
+            hideElementsWhileTimerOn()
+            cardRef.style.display = "none";
+            minutesTodayRef.style.display = "none"
+        }
+    });
+}
+
 
 setBeverage();
 getCurrentTime();
 getCockTime();
 getMinutesToday();
-displayMinutesToday();
-
+checkClockToHideElements();

@@ -2,7 +2,7 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="main.css">
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
     <div class="main">
@@ -145,11 +145,40 @@
     </div>
 
 
-    <br/> <br/> <br/>
-    <h1 id="today" class="hide-on-timer bold-text">0mins Today</h1>
-    <br/>
-    <div id="timerToggle" class="cocktailIcon"></div>
+    <br/> 
+    <h1 id="today" class="bold-text">0mins Today</h1>
     <h1 id="clock" class="bold-text"></h1>
+    <br/>
+    <div class="cocktail-card-wrapper">
+      <div class="card-main">
+        <div class="card-name card-text-large">Beverage</div>
+        <div id="cocktail-icon" class="card-icon"></div>
+        <div id="cocktail-icon-text" class="card-text-small">999</div>
+        <div id="timer-icon" class="card-icon"></div>
+        <div id="timer-icon-text" class="card-text-small">999</div>
+        <div id="cash-icon" class="card-icon"></div>
+        <div id="cash-icon-text" class="card-text-small">999</div>
+        <div id="card-play-button" class="card-text-large">PLAY</div>
+        <svg
+        viewBox="0 0 100 50"
+      ><g
+        fill-opacity="0"
+        stroke-width="8"
+      ><path
+        d="M5 50a45 45 0 1 1 90 0"
+        stroke="#EBEDF8"
+      /><path
+        class="progress"
+        d="M5 50a45 45 0 1 1 90 0"
+        stroke="#00ca9d"
+        stroke-dasharray="142"
+        stroke-dashoffset="142"
+      /></g></svg>
+      <div id="card-xp-text" class="card-text-small">99999</div>
+      </div>
+      <div class="card-shadow"></div>
+    </div>
+    <div id="timerToggle" class="cocktailIcon"></div>
     <img class="cocktail-icon pointsIcon hide-on-timer" src="./images/cocktail-icon.svg"/>
     <div class="pointsText hide-on-timer bold-text" id="cockTime"></div>
     

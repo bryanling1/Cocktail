@@ -60,9 +60,13 @@ function timerIsOff(){
 }
 
 function success(){
-    chrome.storage.sync.get("cocktailSeconds", function(data){
-        chrome.storage.sync.set(
-            {cocktailSeconds: data["cocktailSeconds"] + cockReward,
+    chrome.storage.sync.get(["cocktailSeconds", 'cocktailSet','cocktails'], function(data){
+        const name = data['cocktailSet'];
+        let cocktails = data["cocktails"];
+        cocktails[name]["uses"] = cocktails[name]["uses"] + 1;
+        chrome.storage.sync.set({
+            cocktailSeconds: data["cocktailSeconds"] + cockReward,
+            cocktails: cocktails
         });
         chrome.extension.sendMessage({"message": "displayCocktailTime", "data": data["cocktailSeconds"] +  cockReward})
         chrome.extension.sendMessage({"message": "success", "time": initTimerVal})
@@ -70,7 +74,6 @@ function success(){
         beverageSet = false;
         pushSuccessNotification();
         saveMinutes(initTimerVal);
-
     });
 }
 function pushSuccessNotification() {
@@ -133,6 +136,28 @@ function pushSuccessNotification() {
     })
   }
 
+  function addBeverage(name, cocktailSeconds, timeUntilReady, cashPrize){
+      let cocktails = {};
+      chrome.storage.sync.get("cocktails", function(data){
+        if(data["cocktails"]){
+            cocktails = data["cocktails"];
+        }
+        cocktails[name] = {};
+        cocktails[name]["cocktailSeconds"] = cocktailSeconds;
+        cocktails[name]["timeUntilReady"] = timeUntilReady;
+        cocktails[name]["cashPrize"] = cashPrize;
+        cocktails[name]["tier"] = 1;
+        cocktails[name]["uses"] = 0;
+        
+        chrome.storage.sync.set({"cocktails":cocktails})
+      })
+  }
+
+  function setBeverage(beverage){
+      chrome.storage.sync.set({cocktailSet: beverage})
+  }
+
+
 
 //listeners
 chrome.runtime.onInstalled.addListener(function() {
@@ -142,7 +167,18 @@ chrome.runtime.onInstalled.addListener(function() {
                 {
                 cocktailsMade: 0,
                 allData: {},
-                cocktailSeconds: 0
+                cocktailSeconds: 0,
+                cocktails: {
+                    "test":{
+                        "cocktailSeconds": 10,
+                        "timeUntilReady": 10,
+                        "cashPrize": 10,
+                        "tier": 1,
+                        "uses": 0
+                    },
+                },
+                cocktailSet: "test",
+                cash: 0
             }
             );
         }
@@ -189,9 +225,7 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
         
     }
     else if (req.message == "isTimerOn"){
-        sendResponse({"message": isTimerOn})
+         sendResponse({"message": isTimerOn })
+        // sendResponse({"message": (isTimerOn || (timerVal != initTimerVal) ? (true):(false))})
     }
 })
-
-
-saveMinutes(30*60);

@@ -1,0 +1,14 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 86.07 86.07">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #3d3d3d;
+      }
+    </style>
+  </defs>
+  <title>cocktail-icon-circle</title>
+  <g>
+    <polygon class="cls-1" points="28.17 30.25 56.59 30.25 57.37 29.32 60.06 26.16 24.7 26.16 28.17 30.25"/>
+    <path class="cls-1" d="M787.45,743.51a43,43,0,1,0,43,43A43,43,0,0,0,787.45,743.51Zm23.18,23.31L804,774.68h0l-6.87,8.09-8.87,10.44v18l9.61,5.15H775.76l9.61-5.15v-18L763,766.82h37.55l9.3-10.44,2.13,1.89-7.61,8.54h6.31Z" transform="translate(-744.41 -743.51)"/>
+  </g>
+</svg>
