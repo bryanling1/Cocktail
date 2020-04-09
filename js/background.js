@@ -60,13 +60,15 @@ function timerIsOff(){
 }
 
 function success(){
-    chrome.storage.sync.get(["cocktailSeconds", 'cocktailSet','cocktails'], function(data){
+    chrome.storage.sync.get(["cocktailSeconds", 'cocktailSet','cocktails', 'cash'], function(data){
         const name = data['cocktailSet'];
+        const cash = data['cash'];
         let cocktails = data["cocktails"];
         cocktails[name]["uses"] = cocktails[name]["uses"] + 1;
         chrome.storage.sync.set({
             cocktailSeconds: data["cocktailSeconds"] + cockReward,
-            cocktails: cocktails
+            cocktails: cocktails,
+            cash: cash + cocktails[name]["cashPrize"]
         });
         chrome.extension.sendMessage({"message": "displayCocktailTime", "data": data["cocktailSeconds"] +  cockReward})
         chrome.extension.sendMessage({"message": "success", "time": initTimerVal})
@@ -173,6 +175,13 @@ chrome.runtime.onInstalled.addListener(function() {
                         "cocktailSeconds": 10,
                         "timeUntilReady": 10,
                         "cashPrize": 10,
+                        "tier": 1,
+                        "uses": 0
+                    },
+                    "shotgun":{
+                        "cocktailSeconds": 300,
+                        "timeUntilReady": 1200,
+                        "cashPrize": 20,
                         "tier": 1,
                         "uses": 0
                     },

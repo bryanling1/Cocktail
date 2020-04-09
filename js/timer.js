@@ -13,6 +13,7 @@ const cardXPRef = document.getElementById('card-xp-text');
 const cardProgress = document.querySelector(".progress");
 const cardPlayButtonRef = document.querySelector("#card-play-button");
 const cardRef = document.querySelector(".cocktail-card-wrapper");
+const cardImageRef = document.querySelector(".cocktailIcon");
 const menuSelectorRef =  document.getElementById('selector');
 //level progress
 const dataColumns = document.querySelectorAll(".bars .column .val")
@@ -66,6 +67,7 @@ function setBeverage(){
         const timeUntilReady = data["cocktails"][data['cocktailSet']]["timeUntilReady"]
         const cash = data["cocktails"][data['cocktailSet']]["cashPrize"]
         const uses = data["cocktails"][data['cocktailSet']]["uses"]
+        const tier = data["cocktails"][data['cocktailSet']]["tier"]
         chrome.extension.sendMessage({
             "message":"setBeverage", 
             "name": name,
@@ -77,6 +79,7 @@ function setBeverage(){
         cashIconRef.innerHTML = cash;
         cardXPRef.innerHTML = uses*timeUntilReady;
         cardNameRef.innerHTML = name;
+        cardImageRef.style.backgroundImage = "url('./images/cocktails/"+name+"-tier"+tier+".png')"
         cardProgress.style.setProperty('--percent', getLevelProgress(uses));
         setLevelColors(getLevelColor(uses));
     })
@@ -158,6 +161,7 @@ function toggleSuccess(){
     successScreenRef.classList.toggle("success-off");
     cardRef.style.display = "initial";
     minutesTodayRef.style.display = "block"
+    displayCash()
 }
 
 function secondsToClockString(time){

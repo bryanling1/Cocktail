@@ -313,7 +313,7 @@
     margin: auto;
     cursor: pointer;
     background-image: url("https://i.pinimg.com/originals/b3/39/b2/b339b26453746635c91cca794d48bd58.jpg");
-    background-size: 120%;
+    background-size: contain;
     background-position: center center;
     position: absolute;
     top: 50%;
@@ -358,7 +358,7 @@
     width: 97%;
     background-color: #cecece;
     position: absolute;
-    bottom: 0;
+    bottom: 1px;
     right: 0;
     display: grid;
     border-radius: 9%;
@@ -433,7 +433,11 @@
     stroke: #3d3d3d;
     
   }
-
+  .progress-store{
+    --percent: 50;
+    stroke-dashoffset: calc(142 - (var(--percent) * 142 / 100));
+    
+  }
 .card-main svg{
     grid-area: xp;
     align-self: center;
@@ -485,3 +489,113 @@ h1{
     padding: 0px;
     margin-bottom: 2px;
 }
+
+.store-container{
+    width: 100%;
+    height: 85%;
+    margin-top: 8px;
+    margin-left: -6px;
+    overflow-y: scroll;
+    padding-left: 8px;
+}
+
+.store-card{
+    height: 90px;
+    width: 90px;
+    display: inline-block;
+    background-color: white;
+    margin-right:2px; 
+    margin-top:2px; 
+    border-radius: 5px;
+    padding: 2px;
+    cursor: pointer;
+    position: relative;
+    color: #3d3d3d;
+    font-weight: 600;
+    border: solid red;
+}
+.store-card-stats-grid{
+    height: 40px;
+    width: 40px;
+    display: grid;
+    position: relative;
+    top: 0;
+    left: 0;
+    grid-template-rows: 33.33% 33.33% 33.33% auto;
+    grid-template-columns: 33.3% 66.6% ;
+    grid-template-areas: 
+        "cocktail-icon cocktail-text-card "
+        "cash-icon cash-text-card "
+        "timer-icon timer-text-card  ";
+    z-index: 1;
+}
+
+#store-card-cocktail{
+    grid-area: cocktail-icon;
+    width: 96%;
+    align-self: end;
+}
+
+#store-card-cash{
+    grid-area: cash-icon;
+    width: 96%;
+    align-self: end;
+}
+#store-card-timer{
+    grid-area: timer-icon;
+    width: 96%;
+    align-self: end;
+}
+
+#cocktail-text-card{
+    grid-area: cocktail-text-card;
+    align-self: center;
+
+}
+#cash-text-card{
+    grid-area: cash-text-card;
+    align-self: center;
+
+}
+#timer-text-card{
+    grid-area: timer-text-card;
+    align-self: center;
+
+}
+
+.card-cocktail-preview{
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    width: 40px;
+    height: 60px;
+    margin-left: -20px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+}
+.card-progress{
+    width: 50%;
+    position: absolute;
+    left: 50%;
+    margin-left: -25%;
+    bottom: 10px;
+    z-index: 2;
+}
+
+.store-card-progress-text{
+    text-align: center;
+    position: absolute;
+    bottom: 10px;
+    width: 96%;
+}
+
+/* <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 86.07 86.07">
+  <title>Cocktail</title>
+  <g>
+    <polygon points="28.17 30.25 56.59 30.25 57.37 29.32 60.06 26.16 24.7 26.16 28.17 30.25" style="fill: #3d3d3d"/>
+    <path d="M787.45,743.51a43,43,0,1,0,43,43A43,43,0,0,0,787.45,743.51Zm23.18,23.31L804,774.68h0l-6.87,8.09-8.87,10.44v18l9.61,5.15H775.76l9.61-5.15v-18L763,766.82h37.55l9.3-10.44,2.13,1.89-7.61,8.54h6.31Z" transform="translate(-744.41 -743.51)" style="fill: #3d3d3d"/>
+  </g>
+</svg> */
+
+
