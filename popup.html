@@ -140,8 +140,7 @@
     <div id="home">
     <!-- Success Reset-->
     <div id="successScreen" class="success success-off">
-      Congrats!<br/>
-      <button id="successButton">OK</button>
+      <button id="successButton">CHEERS!</button>
     </div>
 
 
@@ -158,7 +157,7 @@
         <div id="timer-icon-text" class="card-text-small">999</div>
         <div id="cash-icon" class="card-icon"></div>
         <div id="cash-icon-text" class="card-text-small">999</div>
-        <div id="card-play-button" class="card-text-large">PLAY</div>
+        <div id="card-play-button" class="hoverAction card-text-large">PLAY</div>
         <svg
         viewBox="0 0 100 50"
       ><g
@@ -183,17 +182,22 @@
     <div class="pointsText hide-on-timer bold-text" id="cockTime"></div>
     
   </div>
-</div>
-<div id="bar">
+  <div id="bar">
+    <div class="cash bold-text">
+      <img class="icon" src="./images/cash-icon-circle-white.svg"/>
+      <div class="cash-text"> 0000</div>
+     
+    </div>
 
-
+  </div>
 </div>
+
 
   <div class="nav">
     <div id="selector"></div>
-    <div class="nav-button"><img class="icon" id="stats-menu-icon" src="./images/stats-icon.svg"/></div>
-    <div class="nav-button"><img class="icon" id="home-menu-icon" src="./images/home-icon.svg"/></div>
-    <div class="nav-button"><img class="icon" id="bar-menu-icon" src="./images/bar-icon.svg"/></div>
+    <div class="nav-button"><img class="icon hoverAction" id="stats-menu-icon" src="./images/stats-icon.svg"/></div>
+    <div class="nav-button" ><img class="icon hoverAction" id="home-menu-icon" src="./images/home-icon.svg"/></div>
+    <div class="nav-button"><img class="icon hoverAction" id="bar-menu-icon" src="./images/bar-icon.svg"/></div>
   </div>
   <script src="/js/timer.js"></script>
     <script src="/js/data.js"></script>
