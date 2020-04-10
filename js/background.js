@@ -155,12 +155,6 @@ function pushSuccessNotification() {
       })
   }
 
-  function setBeverage(beverage){
-      chrome.storage.sync.set({cocktailSet: beverage})
-  }
-
-
-
 //listeners
 chrome.runtime.onInstalled.addListener(function() {
     chrome.storage.sync.get("cocktailSeconds", function(data){
@@ -224,7 +218,7 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
         }
     }
     else if (req.message == "setBeverage"){
-        if(beverageSet == false){
+        if((isTimerOn == false && timerVal == initTimerVal) || timerVal == 0){
             cockReward  = req.cocktailSeconds;
             timerVal = req.timeUntilReady;
             initTimerVal = req.timeUntilReady;

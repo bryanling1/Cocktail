@@ -40,9 +40,9 @@
       background-color: rgba(0,0,0,0.8);
       width: 100%;
       height: 100%;
-      position: fixed;
+      position: absolute;
       display: flex;
-      z-index: 10;
+      z-index: 100;
       font-weight: bold;
       justify-content: center;
       align-items: center;
@@ -315,6 +315,7 @@
     background-image: url("https://i.pinimg.com/originals/b3/39/b2/b339b26453746635c91cca794d48bd58.jpg");
     background-size: contain;
     background-position: center center;
+    background-repeat: no-repeat;
     position: absolute;
     top: 50%;
     margin-top: -100px;
@@ -512,7 +513,6 @@ h1{
     position: relative;
     color: #3d3d3d;
     font-weight: 600;
-    border: solid red;
 }
 .store-card-stats-grid{
     height: 40px;
@@ -588,6 +588,14 @@ h1{
     position: absolute;
     bottom: 10px;
     width: 96%;
+}
+.store-container-block{
+    background-color: rgba(237, 237, 237, 0.6);
+    width: 100%;
+    height: 78%;
+    position: absolute;
+    z-index: 10;
+    display: none;
 }
 
 /* <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 86.07 86.07">

@@ -15,6 +15,7 @@ const cardPlayButtonRef = document.querySelector("#card-play-button");
 const cardRef = document.querySelector(".cocktail-card-wrapper");
 const cardImageRef = document.querySelector(".cocktailIcon");
 const menuSelectorRef =  document.getElementById('selector');
+
 //level progress
 const dataColumns = document.querySelectorAll(".bars .column .val")
 
@@ -26,6 +27,8 @@ playButtonRef ? (playButtonRef.onclick = function(){
     timerButton();
     cardRef.style.display = "none";
     minutesTodayRef.style.display = "none"
+    const storeBlockerRef = document.querySelector(".store-container-block");
+    storeBlockerRef.style.display = "block"
 }):(null);
 
 playButtonRef ? (successButtonRef.onclick = function(){
@@ -37,6 +40,8 @@ cardPlayButtonRef ? (cardPlayButtonRef.onclick = function(){
     timerButton();
     cardRef.style.display = "none";
     minutesTodayRef.style.display = "none"
+    const storeBlockerRef = document.querySelector(".store-container-block");
+    storeBlockerRef.style.display = "block"
 }):(null);
 
 
@@ -68,14 +73,15 @@ function setBeverage(){
         const cash = data["cocktails"][data['cocktailSet']]["cashPrize"]
         const uses = data["cocktails"][data['cocktailSet']]["uses"]
         const tier = data["cocktails"][data['cocktailSet']]["tier"]
+
         chrome.extension.sendMessage({
             "message":"setBeverage", 
             "name": name,
             "cocktailSeconds": cocktailSeconds,
             "timeUntilReady": timeUntilReady,
         });
-        cocktailIconRef.innerHTML = cocktailSeconds;
-        timerIconRef.innerHTML = timeUntilReady;
+        cocktailIconRef.innerHTML = Math.floor(cocktailSeconds / 60);
+        timerIconRef.innerHTML = Math.floor(timeUntilReady / 60);
         cashIconRef.innerHTML = cash;
         cardXPRef.innerHTML = uses*timeUntilReady;
         cardNameRef.innerHTML = name;
@@ -124,7 +130,7 @@ function getLevelColor(uses){
     const level6 = 1000
 
     if(uses < level1){
-        return "#6d6d6d"
+        return "#74b9ff"
     }else if (uses >= level1 && uses < level1 + level2){
         return "#0984e3"
     }
@@ -162,6 +168,10 @@ function toggleSuccess(){
     cardRef.style.display = "initial";
     minutesTodayRef.style.display = "block"
     displayCash()
+    const storeBlockerRef = document.querySelector(".store-container-block");
+    storeBlockerRef.style.display = "none"
+    setBeverage()
+    displayStoreCocktailItems()
 }
 
 function secondsToClockString(time){
@@ -215,6 +225,7 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
         //hide the card if the timer is paused
         chrome.storage.sync.get(["cocktailSet", "cocktails"], function(data){
             const name = data["cocktailSet"]
+            console.log(name)
             if(data["cocktails"][name]['timeUntilReady'] !== req.time && req.time !== 0 && req.time !== null){
                 cardRef.style.display = "none";
                 minutesTodayRef.style.display = "none"
@@ -290,7 +301,6 @@ function showElementsWhenTimerOff(){
 
 function checkClockToHideElements(){
     chrome.extension.sendMessage({"message":"isTimerOn"}, function(res){
-        console.log(res.message)
         if(res.message){
             hideElementsWhileTimerOn()
             cardRef.style.display = "none";
