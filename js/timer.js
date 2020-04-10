@@ -83,7 +83,7 @@ function setBeverage(){
         cocktailIconRef.innerHTML = Math.floor(cocktailSeconds / 60);
         timerIconRef.innerHTML = Math.floor(timeUntilReady / 60);
         cashIconRef.innerHTML = cash;
-        cardXPRef.innerHTML = uses*timeUntilReady;
+        cardXPRef.innerHTML = Math.floor(uses*timeUntilReady / 60);
         cardNameRef.innerHTML = name;
         cardImageRef.style.backgroundImage = "url('./images/cocktails/"+name+"-tier"+tier+".png')"
         cardProgress.style.setProperty('--percent', getLevelProgress(uses));

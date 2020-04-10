@@ -75,7 +75,7 @@ function displayStoreCocktailItems(){
             stroke-dasharray="142"
             stroke-dashoffset="142"
           /></g></svg>
-          <div class="store-card-progress-text">${value['uses'] * value['timeUntilReady']}</div>
+          <div class="store-card-progress-text">${Math.floor(value['uses'] * value['timeUntilReady'] / 60)}</div>
           </div>
           <style>
                 #${key}{
@@ -90,26 +90,6 @@ function displayStoreCocktailItems(){
         for(let [key, value] of Object.entries(cocktails)){
             document.getElementById(`${key}-card`).onclick = function(){
                 setTheBeverage(`${key}`);
-                // const name = key
-                // const cocktailSeconds =  value["cocktailSeconds"]
-                // const timeUntilReady = value["timeUntilReady"]
-                // const cash = value["cashPrize"]
-                // const uses = value["uses"]
-                // const tier = value["tier"]
-                // chrome.extension.sendMessage({
-                //     "message":"setBeverage", 
-                //     "name": name,
-                //     "cocktailSeconds": cocktailSeconds,
-                //     "timeUntilReady": timeUntilReady,
-                // });
-                // cocktailIconRef.innerHTML = cocktailSeconds;
-                // timerIconRef.innerHTML = timeUntilReady;
-                // cashIconRef.innerHTML = cash;
-                // cardXPRef.innerHTML = uses*timeUntilReady;
-                // cardNameRef.innerHTML = name;
-                // cardImageRef.style.backgroundImage = "url('./images/cocktails/"+name+"-tier"+tier+".png')"
-                // cardProgress.style.setProperty('--percent', getLevelProgress(uses));
-                // setLevelColors(getLevelColor(uses));
                     }
         }
 
