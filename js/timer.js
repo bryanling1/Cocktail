@@ -159,6 +159,7 @@ function setLevelColors(color){
     cardXPRef.style.color = color;
     dataColumns.forEach(function(item){
         item.style.backgroundColor = color
+        item.style.borderColor = color
     })
 
 }

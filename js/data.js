@@ -149,6 +149,9 @@ function setWeekVals(){
                 item.style.height = Math.floor(weekData[i]['minutes'] / largestVal * 100).toString()+"%";
                 if(weekData[i]['minutes'] > 0){
                     item.querySelector(".text").innerHTML = weekData[i]['minutes'];
+                    if(new Date().getTime() - weekData[i]["date"].getTime() < 24*3600*1000){
+                        setBarStylingToToday(item)
+                    }
                 }else{
                     item.querySelector(".text").innerHTML = "";
                 }
@@ -157,6 +160,13 @@ function setWeekVals(){
             
         }
     })
+}
+
+function setBarStylingToToday(ref){
+    ref.style.backgroundColor = "rgba(0,0,0,0)"
+    ref.style.boxSizing = "border-box"
+    ref.style.borderWidth = "3.6px"
+    ref.style.borderStyle = "Solid"
 }
 
 function displayDateRange(){
