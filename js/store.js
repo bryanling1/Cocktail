@@ -82,7 +82,7 @@ function displayStoreCocktailItems(){
                     --percent: ${progress};
                 }
                 #${key}-card{
-                    box-shadow: ${key === cocktailSet ? ("2.7px"):("2.7px")} ${key === cocktailSet ? ("2.7px"):("2.7px")} ${key === cocktailSet ? (color):("#d8d8d8")};
+                    box-shadow: 3.3px 3.3px ${key === cocktailSet ? (color):("#d8d8d8")};
                 }
           </style>
             `; 
