@@ -123,7 +123,8 @@
 }
 
 .bars .column .val{
-    display: block;
+    display: flex;
+    justify-content: center;
     position: absolute;
     bottom: 0;
     background-color: #3d3d3d;
@@ -148,10 +149,6 @@
     text-align: center;
     position: relative;
     top: -18px;
-}
-
-.month .text{
-    left: -4px;
 }
 
 @keyframes reveal{
@@ -230,12 +227,8 @@
     line-height: 8px;
 }
 
-#data-date, #data-date-month{
-    line-height: 30px;
-}
-
-#data-date-year{
-    line-height: 50px;
+#data-date, #data-date-month, #data-date-year{
+    line-height: 38px;
 }
 
 
@@ -305,6 +298,7 @@
 
 .years{
     font-size: 9px;
+    margin-top: 10px;
 }
 
 .cocktailIcon{

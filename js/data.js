@@ -169,6 +169,13 @@ function setBarStylingToToday(ref){
     ref.style.borderStyle = "Solid"
 }
 
+function setBarStylingToTodayMonth(ref){
+    ref.style.backgroundColor = "rgba(0,0,0,0)"
+    ref.style.boxSizing = "border-box"
+    ref.style.borderWidth = "1.6px"
+    ref.style.borderStyle = "Solid"
+}
+
 function displayDateRange(){
     index = dateIRange.getDay();
     date = new Date(dateIRange.getTime() - 24*3600*1000*index);
@@ -245,6 +252,9 @@ function setMonthVals(){
                 item.style.height = Math.floor(monthData[i]['minutes'] / largestVal * 100).toString()+"%";
                 if(monthData[i]['minutes'] > 0 && monthData[i]['minutes']  == largestVal){
                     item.querySelector(".text").innerHTML = monthData[i]['minutes'];
+                    if(new Date().getTime() - monthData[i]["date"].getTime() < 24*3600*1000){
+                        setBarStylingToTodayMonth(item)
+                    }
                 }else{
                     item.querySelector(".text").innerHTML = "";
                 }
@@ -324,6 +334,9 @@ function setYearVals(){
                 item.style.height = Math.floor(yearData[i]['minutes'] / largestVal * 100).toString()+"%";
                 if(yearData[i]['minutes'] > 0){
                     item.querySelector(".text").innerHTML = yearData[i]['minutes'];
+                    if(new Date().getTime() - yearData[i]["date"].getTime()  <= 24*3600*1000 * days_of_a_year(yearData[i]["date"].getFullYear())){
+                        setBarStylingToToday(item)
+                    }
                 }else{
                     item.querySelector(".text").innerHTML = "";
                 }
