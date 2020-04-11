@@ -158,7 +158,10 @@ function setLevelColors(color){
     cardProgress.style.stroke = color;
     cardXPRef.style.color = color;
     dataColumns.forEach(function(item){
-        item.style.backgroundColor = color
+        if(item.style.backgroundColor != "rgba(0, 0, 0, 0)"){
+            item.style.backgroundColor = color
+        }
+
         item.style.borderColor = color
     })
 
@@ -226,7 +229,6 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
         //hide the card if the timer is paused
         chrome.storage.sync.get(["cocktailSet", "cocktails"], function(data){
             const name = data["cocktailSet"]
-            console.log(name)
             if(data["cocktails"][name]['timeUntilReady'] !== req.time && req.time !== 0 && req.time !== null){
                 cardRef.style.display = "none";
                 minutesTodayRef.style.display = "none"
