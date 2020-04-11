@@ -153,6 +153,7 @@ function setWeekVals(){
                         setBarStylingToToday(item)
                     }
                 }else{
+                    item.style.borderWidth = 0
                     item.querySelector(".text").innerHTML = "";
                 }
             })
@@ -256,6 +257,7 @@ function setMonthVals(){
                         setBarStylingToTodayMonth(item)
                     }
                 }else{
+                    item.style.borderWidth = 0
                     item.querySelector(".text").innerHTML = "";
                 }
                 }
@@ -338,6 +340,7 @@ function setYearVals(){
                         setBarStylingToToday(item)
                     }
                 }else{
+                    item.style.borderWidth = 0
                     item.querySelector(".text").innerHTML = "";
                 }
             })
