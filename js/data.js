@@ -253,12 +253,12 @@ function setMonthVals(){
                 item.style.height = Math.floor(monthData[i]['minutes'] / largestVal * 100).toString()+"%";
                 if(monthData[i]['minutes'] > 0 && monthData[i]['minutes']  == largestVal){
                     item.querySelector(".text").innerHTML = monthData[i]['minutes'];
-                    if(new Date().getTime() - monthData[i]["date"].getTime() < 24*3600*1000){
-                        setBarStylingToTodayMonth(item)
-                    }
                 }else{
-                    item.style.borderWidth = 0
+                    //if the bar is not the tallest     
                     item.querySelector(".text").innerHTML = "";
+                }
+                if(new Date().getTime() - monthData[i]["date"].getTime() < 24*3600*1000 && monthData[i]['minutes']){
+                    setBarStylingToTodayMonth(item)
                 }
                 }
             })
@@ -336,13 +336,14 @@ function setYearVals(){
                 item.style.height = Math.floor(yearData[i]['minutes'] / largestVal * 100).toString()+"%";
                 if(yearData[i]['minutes'] > 0){
                     item.querySelector(".text").innerHTML = yearData[i]['minutes'];
-                    if(new Date().getTime() - yearData[i]["date"].getTime()  <= 24*3600*1000 * days_of_a_year(yearData[i]["date"].getFullYear())){
-                        setBarStylingToToday(item)
-                    }
+                    
                 }else{
-                    item.style.borderWidth = 0
                     item.querySelector(".text").innerHTML = "";
                 }
+                if(new Date().getTime() - yearData[i]["date"].getTime()  <= 24*3600*1000 * days_of_a_year(yearData[i]["date"].getFullYear()) && yearData[i]['minutes'] > 0){
+                    setBarStylingToToday(item)
+                }
+                
             })
 
             
