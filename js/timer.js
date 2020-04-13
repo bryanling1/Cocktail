@@ -15,10 +15,8 @@ const cardPlayButtonRef = document.querySelector("#card-play-button");
 const cardRef = document.querySelector(".cocktail-card-wrapper");
 const cardImageRef = document.querySelector(".cocktailIcon");
 const menuSelectorRef =  document.getElementById('selector');
-
 //level progress
 const dataColumns = document.querySelectorAll(".bars .column .val")
-
 let timerVal = 10;
 let isVideoPlaying = false;
 let minutesToday = 0;
@@ -31,10 +29,12 @@ playButtonRef ? (playButtonRef.onclick = function(){
     storeBlockerRef.style.display = "block"
 }):(null);
 
+
 playButtonRef ? (successButtonRef.onclick = function(){
     toggleSuccess();
     setBeverage();
 }):(null);
+
 
 cardPlayButtonRef ? (cardPlayButtonRef.onclick = function(){
     timerButton();
@@ -49,21 +49,26 @@ function timerButton(){
     chrome.extension.sendMessage({"message":"timerButton", "time": timerVal});
 }
 
+
 function displayTime(data){
     clockRef.innerHTML = secondsToClockString(data);
 }
+
 
 function getCurrentTime(){
     chrome.extension.sendMessage({"message":"showTime"});
 }
 
+
 function displayCockTime(data){
     cockTimeRef.innerHTML = secondsToClockString(data);
 }
 
+
 function getCockTime(){
     chrome.extension.sendMessage({"message":"getCockTime"});
 }
+
 
 function setBeverage(){
     chrome.storage.sync.get(['cocktailSet','cocktails'], function(data){
@@ -90,6 +95,7 @@ function setBeverage(){
         setLevelColors(getLevelColor(uses));
     })
 }
+
 
 function getLevelProgress(uses){
     const level1 = 10
@@ -121,6 +127,7 @@ function getLevelProgress(uses){
     }
 }
 
+
 function getLevelColor(uses){
     const level1 = 10
     const level2 = 25
@@ -151,6 +158,7 @@ function getLevelColor(uses){
     }
 }
 
+
 function setLevelColors(color){
     menuSelectorRef.style.backgroundColor = color;
     cardPlayButtonRef.style.backgroundColor = color;
@@ -161,11 +169,11 @@ function setLevelColors(color){
         if(item.style.backgroundColor != "rgba(0, 0, 0, 0)"){
             item.style.backgroundColor = color
         }
-
         item.style.borderColor = color
     })
 
 }
+
 
 function toggleSuccess(){
     successScreenRef.classList.toggle("success-off");
@@ -178,6 +186,7 @@ function toggleSuccess(){
     displayStoreCocktailItems()
 }
 
+
 function secondsToClockString(time){
     let minutes = Math.floor(time / 60); 
     let seconds = time % 60;
@@ -186,7 +195,7 @@ function secondsToClockString(time){
 }
 
 
-  function pushEmptyNotification() {
+function pushEmptyNotification() {
     // Let's check if the browser supports notifications
     if (!("Notification" in window)) {
       alert("This browser does not support desktop notification");
@@ -202,7 +211,6 @@ function secondsToClockString(time){
       }
        );
     }
-  
     // Otherwise, we need to ask the user for permission
     else if (Notification.permission !== "denied") {
       Notification.requestPermission().then(function (permission) {
@@ -217,7 +225,6 @@ function secondsToClockString(time){
         }
       });
     }
-  
     // At last, if the user has denied notifications, and you 
     // want to be respectful there is no need to bother them any more.
   }
@@ -252,8 +259,8 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
     }
 })
 
+
 const video = document.querySelector('video');
-let pauseVideo = function(){}
 
 if(video){
     video.addEventListener('playing', (event) => {
@@ -274,6 +281,7 @@ if(video){
     }
 }
 
+
 function getMinutesToday(){
     const date = new Date().toDateString();
     chrome.storage.sync.get("allData", function(data){
@@ -283,6 +291,8 @@ function getMinutesToday(){
         displayMinutesToday();
     })
 }
+
+
 function displayMinutesToday(){
     minutesTodayRef.innerHTML = minutesToday+" mins Today"
 }
@@ -295,12 +305,14 @@ function hideElementsWhileTimerOn(){
     })
 }
 
+
 function showElementsWhenTimerOff(){
     let selector = document.querySelectorAll(".hide-on-timer");
     selector.forEach(item=>{
         item.style.display = "block";
     })
 }
+
 
 function checkClockToHideElements(){
     chrome.extension.sendMessage({"message":"isTimerOn"}, function(res){

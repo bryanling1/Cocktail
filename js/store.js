@@ -9,6 +9,7 @@ function displayCash(){
     })
 }
 
+
 function displayStoreCocktailItems(){
     chrome.storage.sync.get(['cocktails', 'cocktailSet'], function(data){
         const cocktails = data["cocktails"]
@@ -20,7 +21,6 @@ function displayStoreCocktailItems(){
             cocktailsRef.innerHTML += `
             <div id="${key}-card" class="store-card">
             <div class="store-card-stats-grid">
-    
               <svg id="store-card-cocktail" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 86.07 86.07">
                 <title>Cocktail</title>
                 <g>
@@ -28,7 +28,6 @@ function displayStoreCocktailItems(){
                   <path d="M787.45,743.51a43,43,0,1,0,43,43A43,43,0,0,0,787.45,743.51Zm23.18,23.31L804,774.68h0l-6.87,8.09-8.87,10.44v18l9.61,5.15H775.76l9.61-5.15v-18L763,766.82h37.55l9.3-10.44,2.13,1.89-7.61,8.54h6.31Z" transform="translate(-744.41 -743.51)" style="fill: ${color}"/>
                 </g>
               </svg>
-    
               <svg id="store-card-timer" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 86.07 86.07">
                 <defs>
                   <style>
@@ -40,7 +39,6 @@ function displayStoreCocktailItems(){
                 <title>Cocktail</title>
                 <path class="cls-1-${key}" d="M911.24,743.51a43,43,0,1,0,43,43A43,43,0,0,0,911.24,743.51Zm0,38.47a4.38,4.38,0,1,1-4.38,4.38s0-.05,0-0.08l-0.08.08-7.33-11.78,11.78,7.35-0.07.07h0.07Zm0,31.84a27.46,27.46,0,0,1-19.42-46.88l3.61,3.61a22.36,22.36,0,1,0,18.36-6.4v6.28h-5.1V758.89h2.55A27.46,27.46,0,0,1,911.24,813.82Z" transform="translate(-868.2 -743.51)"/>
               </svg>
-    
               <svg id="store-card-cash" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 86.07 86.07">
                 <defs>
                   <style>
@@ -55,7 +53,6 @@ function displayStoreCocktailItems(){
               <div id="cocktail-text-card">${Math.floor(value['cocktailSeconds'] / 60)}</div>
               <div id="cash-text-card">${value['cashPrize']}</div>
               <div id="timer-text-card">${Math.floor(value['timeUntilReady'] / 60)}</div>
-              
             </div>
             <div class="card-cocktail-preview" style="background-image:url('./images/cocktails/${key+"-tier"+value["tier"]}.png')"></div>
             <svg
@@ -95,6 +92,8 @@ function displayStoreCocktailItems(){
 
     })
 }
+
+
 function setTheBeverage(beverage){
     chrome.storage.sync.set({cocktailSet: beverage}, function(){
         displayStoreCocktailItems();
@@ -102,8 +101,6 @@ function setTheBeverage(beverage){
     })
     
 }
-
-
 
 displayCash();
 displayStoreCocktailItems();
