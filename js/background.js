@@ -83,7 +83,7 @@ function success(){
         isTimerOn = false;
         beverageSet = false;
         pushSuccessNotification();
-        saveMinutes(initTimerVal);
+        saveSeconds(initTimerVal);
     });
 }
 
@@ -122,7 +122,7 @@ function pushSuccessNotification() {
   }
 
   
-function saveMinutes(seconds){
+function saveSeconds(seconds){
     minutes = Math.floor(seconds / 60);
     let date = new Date().toDateString();
     let date2 = date.split(" ")[1]+date.split(" ")[3];
@@ -142,6 +142,46 @@ function saveMinutes(seconds){
         }else{
             allData[date2] = minutes;
         }
+        chrome.storage.sync.set({'allData': allData});
+    })
+}
+
+function saveSecondsAtDate(seconds, dateString){
+    minutes = Math.floor(seconds / 60);
+    let date = new Date(dateString).toDateString();
+    let date2 = date.split(" ")[1]+date.split(" ")[3];
+    let allData = {};
+    chrome.storage.sync.get("allData", function(data){
+        if(data){
+            allData = data["allData"];
+        }
+        if(date in allData){
+            allData[date] += minutes;
+        }else{
+            allData[date] = minutes;
+        }
+        //for the whole month
+        if(date2 in allData){
+            allData[date2] += minutes;
+        }else{
+            allData[date2] = minutes;
+        }
+        chrome.storage.sync.set({'allData': allData});
+    })
+}
+
+function setSecondsAtDate(seconds, dateString){
+    minutes = Math.floor(seconds / 60);
+    let date = new Date(dateString).toDateString();
+    let date2 = date.split(" ")[1]+date.split(" ")[3];
+    let allData = {};
+    chrome.storage.sync.get("allData", function(data){
+        if(data){
+            allData = data["allData"];
+        }
+        
+        allData[date] = minutes;
+        //month data does not change
         chrome.storage.sync.set({'allData': allData});
     })
 }
