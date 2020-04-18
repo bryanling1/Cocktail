@@ -266,26 +266,26 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
 })
 
 
-const video = document.querySelector('video');
+// const video = document.querySelector('video');
 
-if(video){
-    video.addEventListener('playing', (event) => {
-        if(isVideoPlaying == false){
-            chrome.extension.sendMessage({"message":"playingVideo"});
-            isVideoPlaying = true;
-        }
-    });
-    video.addEventListener('pause', (event) => {
-        if(isVideoPlaying == true){
-            chrome.extension.sendMessage({"message":"pauseVideo"});
-            isVideoPlaying = false;
-        }
-    });
-    pauseVideo = function(){
-        video.pause();
-        pushEmptyNotification();
-    }
-}
+// if(video){
+//     video.addEventListener('playing', (event) => {
+//         if(isVideoPlaying == false){
+//             chrome.extension.sendMessage({"message":"playingVideo"});
+//             isVideoPlaying = true;
+//         }
+//     });
+//     video.addEventListener('pause', (event) => {
+//         if(isVideoPlaying == true){
+//             chrome.extension.sendMessage({"message":"pauseVideo"});
+//             isVideoPlaying = false;
+//         }
+//     });
+//     pauseVideo = function(){
+//         video.pause();
+//         pushEmptyNotification();
+//     }
+// }
 
 
 function getMinutesToday(){
