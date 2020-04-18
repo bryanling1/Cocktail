@@ -16,8 +16,8 @@ function displayStoreCocktailItems(){
         const cocktailSet = data["cocktailSet"]
         cocktailsRef.innerHTML = `<div class="store-container-block"></div>`;
         for(let [key, value] of Object.entries(cocktails)){
-            const color = getLevelColor(value['uses']);
-            const progress = getLevelProgress(value['uses']);
+            const color = getLevelColor(value['uses']*value["timeUntilReady"]);
+            const progress = getLevelProgress(value['uses']*value["timeUntilReady"]);
             cocktailsRef.innerHTML += `
             <div id="${key}-card" class="store-card">
             <div class="store-card-stats-grid">

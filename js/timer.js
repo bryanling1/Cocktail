@@ -91,17 +91,20 @@ function setBeverage(){
         cardXPRef.innerHTML = Math.floor(uses*timeUntilReady / 60);
         cardNameRef.innerHTML = name;
         cardImageRef.style.backgroundImage = "url('./images/cocktails/"+name+"-tier"+tier+".png')"
-        cardProgress.style.setProperty('--percent', getLevelProgress(uses));
-        setLevelColors(getLevelColor(uses));
+        cardProgress.style.setProperty('--percent', getLevelProgress(uses*timeUntilReady));
+        setLevelColors(getLevelColor(uses*timeUntilReady));
     })
 }
 
 
-function getLevelProgress(uses){
-    const level1 = 10
-    const level2 = 25
-    const level3 = 100
-    const level4 = 250
+function getLevelProgress(totalMinutes){
+    let hours = (totalMinutes / 60 ) / 60 
+    let uses = hours
+    //levels are in hours
+    const level1 = 1
+    const level2 = 5
+    const level3 = 25
+    const level4 = 100
     const level5 = 500
     const level6 = 1000
 
@@ -128,11 +131,14 @@ function getLevelProgress(uses){
 }
 
 
-function getLevelColor(uses){
-    const level1 = 10
-    const level2 = 25
-    const level3 = 100
-    const level4 = 250
+function getLevelColor(totalMinutes){
+    let hours = (totalMinutes / 60 ) / 60 
+    let uses = hours
+    //levels are in hours
+    const level1 = 1
+    const level2 = 5
+    const level3 = 25
+    const level4 = 100
     const level5 = 500
     const level6 = 1000
 

@@ -87,6 +87,12 @@ function success(){
     });
 }
 
+function setCocktailSeconds(seconds){
+    chrome.storage.sync.set({
+        cocktailSeconds: seconds,
+    });
+}
+
 
 function pushSuccessNotification() {
     // Let's check if the browser supports notifications
@@ -119,7 +125,7 @@ function pushSuccessNotification() {
     }
     // At last, if the user has denied notifications, and you 
     // want to be respectful there is no need to bother them any more.
-  }
+}
 
   
 function saveSeconds(seconds){
