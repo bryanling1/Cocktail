@@ -315,7 +315,7 @@
 }
 
 .cocktailIcon{
-    height: 200px;
+    height: 180px;
     width: 130px;
     display: block;
     margin: auto;
@@ -326,9 +326,9 @@
     background-repeat: no-repeat;
     position: absolute;
     top: 50%;
-    margin-top: -100px;
+    margin-top: -90px;
     left: 50%;
-    margin-left: -65px;
+    margin-left: -125px;
 
 }
 .cocktail-card-wrapper{
