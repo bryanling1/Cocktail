@@ -6,6 +6,7 @@ let cockTimerVal = null;
 let isTimerOn = false;
 let cockReward = null;
 let beverageSet = false;
+let isTimerExist = false;
 function stopClock(){
     clearInterval(timerInterval);
 }
@@ -82,6 +83,7 @@ function success(){
         chrome.extension.sendMessage({"message": "success", "time": initTimerVal})
         isTimerOn = false;
         beverageSet = false;
+        isTimerExist = false;
         pushSuccessNotification();
         saveSeconds(initTimerVal);
     });
@@ -255,6 +257,9 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
             isTimerOn = true;
             timerIsOn()
             timerInterval = setInterval(clockDown, 1000);
+            if (isTimerExist == false){
+                isTimerExist = true;
+            }
         }
     }else if(req.message == "showTime"){
         sendClockVal(timerVal);
@@ -286,5 +291,8 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
     else if (req.message == "isTimerOn"){
          sendResponse({"message": isTimerOn })
         // sendResponse({"message": (isTimerOn || (timerVal != initTimerVal) ? (true):(false))})
+    }
+    else if (req.message == "isTimerExist"){
+        sendResponse({"message": isTimerExist})
     }
 })

@@ -15,6 +15,7 @@ const cardPlayButtonRef = document.querySelector("#card-play-button");
 const cardRef = document.querySelector(".cocktail-card-wrapper");
 const cardImageRef = document.querySelector(".cocktailIcon");
 const menuSelectorRef =  document.getElementById('selector');
+const navbarBlockerRef = document.getElementById('nav-block')
 //level progress
 const dataColumns = document.querySelectorAll(".bars .column .val")
 let timerVal = 10;
@@ -25,8 +26,7 @@ playButtonRef ? (playButtonRef.onclick = function(){
     timerButton();
     cardRef.style.display = "none";
     minutesTodayRef.style.display = "none"
-    const storeBlockerRef = document.querySelector(".store-container-block");
-    storeBlockerRef.style.display = "block"
+    navbarBlockerRef.style.display = "block"
 }):(null);
 
 
@@ -40,8 +40,7 @@ cardPlayButtonRef ? (cardPlayButtonRef.onclick = function(){
     timerButton();
     cardRef.style.display = "none";
     minutesTodayRef.style.display = "none"
-    const storeBlockerRef = document.querySelector(".store-container-block");
-    storeBlockerRef.style.display = "block"
+    navbarBlockerRef.style.display = "block"
 }):(null);
 
 
@@ -185,6 +184,7 @@ function toggleSuccess(){
     successScreenRef.classList.toggle("success-off");
     cardRef.style.display = "initial";
     minutesTodayRef.style.display = "block"
+    navbarBlockerRef.style.display = "none"
     displayCash()
     const storeBlockerRef = document.querySelector(".store-container-block");
     storeBlockerRef.style.display = "none"
@@ -326,6 +326,11 @@ function checkClockToHideElements(){
             hideElementsWhileTimerOn()
             cardRef.style.display = "none";
             minutesTodayRef.style.display = "none"
+        }
+    });
+    chrome.extension.sendMessage({"message":"isTimerExist"}, function(res){
+        if(res.message){
+            navbarBlockerRef.style.display = "block"
         }
     });
 }
