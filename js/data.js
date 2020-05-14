@@ -190,7 +190,7 @@ function displayDateRange(){
     index = dateIRange.getDay();
     date = new Date(dateIRange.getTime() - 24*3600*1000*index);
     const startDate = date.toDateString().split(" ")[1] + " " +date.toDateString().split(" ")[2];
-    date = new Date(date.getTime() + 24*3600*1000*7);
+    date = new Date(date.getTime() + 24*3600*1000*6);
     const endDate = date.toDateString().split(" ")[1] + " " +date.toDateString().split(" ")[2];
     dataDateRef.innerHTML = startDate + " - " + endDate;
 }
