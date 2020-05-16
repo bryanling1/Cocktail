@@ -7,6 +7,8 @@ let isTimerOn = false;
 let cockReward = null;
 let beverageSet = false;
 let isTimerExist = false;
+let isCocktailTimerOn = false;
+
 function stopClock(){
     clearInterval(timerInterval);
 }
@@ -33,6 +35,7 @@ function cockClockDown(){
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             chrome.tabs.sendMessage(tabs[0].id, {"message": "noCockTime"});
           });
+        isCocktailTimerOn = false;
     }else{
         cockTimerVal -= 1;
         sendCockClockVal(cockTimerVal);
@@ -268,14 +271,19 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
             chrome.extension.sendMessage({"message": "displayCocktailTime", "data": data["cocktailSeconds"]})
         });
     }else if (req.message == "playingVideo"){
-        chrome.storage.sync.get("cocktailSeconds", function(data){
-            cockTimerVal = data["cocktailSeconds"];
-            cockTimerInterval = setInterval(cockClockDown, 1000);
-        });
+        if(!isCocktailTimerOn){
+            chrome.storage.sync.get("cocktailSeconds", function(data){
+                cockTimerVal = data["cocktailSeconds"];
+                cockTimerInterval = setInterval(cockClockDown, 1000);
+            });
+            isCocktailTimerOn = true;
+        }
+        
     }else if (req.message == "pauseVideo"){
-        if(cockTimerVal){
+        if(cockTimerVal && isCocktailTimerOn){
             setCockTimerVal(cockTimerVal);
             stopCockClock();
+            isCocktailTimerOn = false;
         }
     }
     else if (req.message == "setBeverage"){
