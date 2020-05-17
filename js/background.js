@@ -215,6 +215,14 @@ function addBeverage(name, cocktailSeconds, timeUntilReady, cashPrize){
     })
 }
 
+function initCocktailTimer(){
+    chrome.storage.sync.get("cocktailSeconds", function(data){
+        cockTimerVal = data["cocktailSeconds"];
+        cockTimerInterval = setInterval(cockClockDown, 1000);
+        isCocktailTimerOn = true;
+    });
+}
+
 //listeners
 chrome.runtime.onInstalled.addListener(function() {
     chrome.storage.sync.get("cocktailSeconds", function(data){
@@ -272,11 +280,7 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
         });
     }else if (req.message == "playingVideo"){
         if(!isCocktailTimerOn){
-            chrome.storage.sync.get("cocktailSeconds", function(data){
-                cockTimerVal = data["cocktailSeconds"];
-                cockTimerInterval = setInterval(cockClockDown, 1000);
-            });
-            isCocktailTimerOn = true;
+            initCocktailTimer()
         }
         
     }else if (req.message == "pauseVideo"){
@@ -284,6 +288,15 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
             setCockTimerVal(cockTimerVal);
             stopCockClock();
             isCocktailTimerOn = false;
+        }
+    }else if(req.message == "cockButton"){
+        if(isCocktailTimerOn){
+            isCocktailTimerOn = false;
+            setCockTimerVal(cockTimerVal);
+            stopCockClock();
+            isCocktailTimerOn = false;
+        }else{
+            initCocktailTimer()
         }
     }
     else if (req.message == "setBeverage"){

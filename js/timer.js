@@ -16,6 +16,8 @@ const cardRef = document.querySelector(".cocktail-card-wrapper");
 const cardImageRef = document.querySelector(".cocktailIcon");
 const menuSelectorRef =  document.getElementById('selector');
 const navbarBlockerRef = document.getElementById('nav-block')
+const cocktailButtonRef1 = document.getElementById("cockTimeIcon")
+const cocktailButtonRef2 = document.getElementById("cockTime")
 //level progress
 const dataColumns = document.querySelectorAll(".bars .column .val")
 let timerVal = 10;
@@ -43,6 +45,17 @@ cardPlayButtonRef ? (cardPlayButtonRef.onclick = function(){
     navbarBlockerRef.style.display = "block"
 }):(null);
 
+if(cocktailButtonRef1){
+    cocktailButtonRef1.onclick = function(){
+        chrome.extension.sendMessage({"message": "cockButton"})
+    }
+}
+
+if(cocktailButtonRef2){
+    cocktailButtonRef2.onclick = function(){
+        chrome.extension.sendMessage({"message": "cockButton"})
+    }
+}
 
 function timerButton(){
     chrome.extension.sendMessage({"message":"timerButton", "time": timerVal});
