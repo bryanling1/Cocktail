@@ -30,6 +30,7 @@ const dataColumns = document.querySelectorAll(".bars .column .val")
 let timerVal = 10;
 let isVideoPlaying = false;
 let minutesToday = 0;
+let hardcoreButtonColor = "";
 
 playButtonRef ? (playButtonRef.onclick = function(){
     timerButton();
@@ -81,8 +82,10 @@ eyeSwitchCheckRef.addEventListener('change',function(){
         console.log(res.message)
         if(res.message){
             setHardcoreMode()
+            eyeSwitchRef.querySelector(".slider").style.backgroundColor = hardcoreButtonColor
         }else{
             setNormalMode()
+            eyeSwitchRef.querySelector(".slider").style.backgroundColor = "#3d3d3d"
         }
     })
   });
@@ -213,13 +216,16 @@ function setLevelColors(color){
     cardNameRef.style.color = color;
     cardProgress.style.stroke = color;
     cardXPRef.style.color = color;
+    hardcoreButtonColor = color;
     dataColumns.forEach(function(item){
         if(item.style.backgroundColor != "rgba(0, 0, 0, 0)"){
             item.style.backgroundColor = color
         }
         item.style.borderColor = color
     })
-
+    if(eyeSwitchCheckRef.checked){
+        eyeSwitchRef.querySelector(".slider").style.backgroundColor = color
+    }
 }
 
 
@@ -280,10 +286,11 @@ function pushEmptyNotification() {
 
 function initHardcoreMode(){
     chrome.extension.sendMessage({"message": "isHardcoreOn"}, function(res){
-        console.log(res.message)
         if(res.message == true){
             setHardcoreMode()
             eyeSwitchCheckRef.checked = true;
+            eyeSwitchRef.querySelector(".slider").style.backgroundColor = hardcoreButtonColor
+        
         }else{
             setNormalMode()
         }
@@ -411,3 +418,4 @@ getCockTime();
 getMinutesToday();
 checkClockToHideElements();
 initHardcoreMode()
+
