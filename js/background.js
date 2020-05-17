@@ -37,6 +37,9 @@ function cockClockDown(){
             chrome.tabs.sendMessage(tabs[0].id, {"message": "noCockTime"});
           });
         isCocktailTimerOn = false;
+        if(isHardcoreModeOn){
+            startTimer()
+        }
     }else{
         cockTimerVal -= 1;
         sendCockClockVal(cockTimerVal);
@@ -90,6 +93,9 @@ function success(){
         isTimerExist = false;
         pushSuccessNotification();
         saveSeconds(initTimerVal);
+        if(isHardcoreModeOn){
+            initCocktailTimer()
+        }
     });
 }
 
@@ -224,6 +230,30 @@ function initCocktailTimer(){
     });
 }
 
+function startTimer(){
+    isTimerOn = true;
+    timerIsOn()
+    timerInterval = setInterval(clockDown, 1000);
+    if (isTimerExist == false){
+        isTimerExist = true;
+    }
+    chrome.extension.sendMessage({"message": "blocknav"})
+    //pause the cocktai timer if its on
+    if(cockTimerVal && isCocktailTimerOn){
+        setCockTimerVal(cockTimerVal);
+        stopCockClock();
+        isCocktailTimerOn = false;
+    }
+}
+
+function pauseCocktailTimer(){
+    if(cockTimerVal && isCocktailTimerOn){
+        setCockTimerVal(cockTimerVal);
+        stopCockClock();
+        isCocktailTimerOn = false;
+    }
+}
+
 //listeners
 chrome.runtime.onInstalled.addListener(function() {
     chrome.storage.sync.get("cocktailSeconds", function(data){
@@ -265,13 +295,7 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
             timerIsOff()
             stopClock(timerInterval);
         }else{
-            timerVal = timerVal;
-            isTimerOn = true;
-            timerIsOn()
-            timerInterval = setInterval(clockDown, 1000);
-            if (isTimerExist == false){
-                isTimerExist = true;
-            }
+            startTimer()
         }
     }else if(req.message == "showTime"){
         sendClockVal(timerVal);
@@ -323,6 +347,8 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
     else if (req.message == "hardcoreButton"){
         isHardcoreModeOn = !isHardcoreModeOn
         sendResponse({"message": isHardcoreModeOn})
-        // isHardcoreModeOn = !isHardcoreModeOn
+        if(isHardcoreModeOn){
+            initCocktailTimer()
+        }
     }
 })

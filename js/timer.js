@@ -79,7 +79,6 @@ eyeSwitchCheckRef.addEventListener('change',function(){
     // else
     //   console.log('toggle: Hide');
     chrome.extension.sendMessage({"message": "hardcoreButton"}, function(res){
-        console.log(res.message)
         if(res.message){
             setHardcoreMode()
             eyeSwitchRef.querySelector(".slider").style.backgroundColor = hardcoreButtonColor
@@ -322,8 +321,8 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
         hideElementsWhileTimerOn()
     }else if(req.message == "timerIsOff"){
         showElementsWhenTimerOff()
-    }else if(req.message == "hardcoreMode"){
-        console.log(req.data)
+    }else if(req.message == "blocknav"){
+        navbarBlockerRef.style.display = "block"
     }
 })
 
@@ -400,6 +399,7 @@ function setHardcoreMode(){
     cocktimeIconRef.src = "./images/cocktail-icon-light.svg"
     eyeRef.src = './images/eye-dark.svg'
     todayTimeRef.style.color = "white"
+    clockRef.style.color = "white"
 }
 
 function setNormalMode(){
@@ -409,6 +409,7 @@ function setNormalMode(){
     cocktimeIconRef.src = "./images/cocktail-icon.svg"
     eyeRef.src = './images/eye.svg'
     todayTimeRef.style.color = "#3d3d3d"
+    clockRef.style.color = "#3d3d3d"
 }
 
 
