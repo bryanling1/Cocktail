@@ -286,10 +286,10 @@ if(video){
         chrome.extension.sendMessage({"message":"playingVideo"});
         isVideoPlaying = true;
     });
-    video.addEventListener('pause', (event) => {
-        chrome.extension.sendMessage({"message":"pauseVideo"});
-        isVideoPlaying = false;
-    });
+    // video.addEventListener('pause', (event) => {
+    //     chrome.extension.sendMessage({"message":"pauseVideo"});
+    //     isVideoPlaying = false;
+    // });
     pauseVideo = function(){
         video.pause();
         pushEmptyNotification();
