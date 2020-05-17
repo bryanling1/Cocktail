@@ -582,7 +582,6 @@ h1{
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;
-    background-color: rgba(0,0,0,0.1)
 }
 .card-progress{
     width: 50%;
@@ -620,6 +619,69 @@ h1{
 #cockTime{
     cursor: pointer;
 }
+
+.switch {
+    position: absolute;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+    top: 5px;
+    right: 5px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 17px;
+    width: 17px;
+    left: 3px;
+    bottom: 2.3px;
+    background-color: white;
+    -webkit-transition: .2s;
+    transition: .2s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(17px);
+    -ms-transform: translateX(17px);
+    transform: translateX(17px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
 /* <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 86.07 86.07">
   <title>Cocktail</title>
   <g>
