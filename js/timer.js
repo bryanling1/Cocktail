@@ -18,6 +18,13 @@ const menuSelectorRef =  document.getElementById('selector');
 const navbarBlockerRef = document.getElementById('nav-block')
 const cocktailButtonRef1 = document.getElementById("cockTimeIcon")
 const cocktailButtonRef2 = document.getElementById("cockTime")
+const eyeRef = document.getElementById("eye")
+const homeRef = document.getElementById("home")
+const cocktimeIconRef = document.getElementById("cockTimeIcon")
+const timerValRef = document.getElementById("cockTime")
+const todayTimeRef = document.getElementById("today")
+const eyeSwitchRef = document.getElementById("eye-switch")
+const eyeSwitchCheckRef = document.getElementById("eye-switch-check")
 //level progress
 const dataColumns = document.querySelectorAll(".bars .column .val")
 let timerVal = 10;
@@ -56,6 +63,29 @@ if(cocktailButtonRef2){
         chrome.extension.sendMessage({"message": "cockButton"})
     }
 }
+
+// if(eyeSwitchRef){
+//     eyeSwitchRef.onclick = function(){
+//         console.log(eyeSwitchCheckRef.checked)
+//         // chrome.extension.sendMessage({"message": "hardcoreMode"})
+//         // initHardcoreMode()
+//     }
+// }
+
+eyeSwitchCheckRef.addEventListener('change',function(){
+    // if(this.checked)
+    //   console.log('toggle: Show');
+    // else
+    //   console.log('toggle: Hide');
+    chrome.extension.sendMessage({"message": "hardcoreButton"}, function(res){
+        console.log(res.message)
+        if(res.message){
+            setHardcoreMode()
+        }else{
+            setNormalMode()
+        }
+    })
+  });
 
 function timerButton(){
     chrome.extension.sendMessage({"message":"timerButton", "time": timerVal});
@@ -248,7 +278,17 @@ function pushEmptyNotification() {
     // want to be respectful there is no need to bother them any more.
   }
 
-
+function initHardcoreMode(){
+    chrome.extension.sendMessage({"message": "isHardcoreOn"}, function(res){
+        console.log(res.message)
+        if(res.message == true){
+            setHardcoreMode()
+            eyeSwitchCheckRef.checked = true;
+        }else{
+            setNormalMode()
+        }
+    })
+}
 chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
     if(req.message == "getTimerTick"){
         displayTime(req.time);
@@ -275,6 +315,8 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
         hideElementsWhileTimerOn()
     }else if(req.message == "timerIsOff"){
         showElementsWhenTimerOff()
+    }else if(req.message == "hardcoreMode"){
+        console.log(req.data)
     }
 })
 
@@ -344,9 +386,28 @@ function checkClockToHideElements(){
     });
 }
 
+function setHardcoreMode(){
+    homeRef.style.backgroundColor = "#232323"
+    homeRef.style.backgroundImage = "url('./images/table-dark.svg')"
+    timerValRef.style.color = "white"
+    cocktimeIconRef.src = "./images/cocktail-icon-light.svg"
+    eyeRef.src = './images/eye-dark.svg'
+    todayTimeRef.style.color = "white"
+}
+
+function setNormalMode(){
+    homeRef.style.backgroundColor = "white"
+    homeRef.style.backgroundImage = "url('./images/table.svg')"
+    timerValRef.style.color = "#3d3d3d"
+    cocktimeIconRef.src = "./images/cocktail-icon.svg"
+    eyeRef.src = './images/eye.svg'
+    todayTimeRef.style.color = "#3d3d3d"
+}
+
 
 setBeverage();
 getCurrentTime();
 getCockTime();
 getMinutesToday();
 checkClockToHideElements();
+initHardcoreMode()

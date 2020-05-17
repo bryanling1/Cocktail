@@ -8,6 +8,7 @@ let cockReward = null;
 let beverageSet = false;
 let isTimerExist = false;
 let isCocktailTimerOn = false;
+let isHardcoreModeOn = false;
 
 function stopClock(){
     clearInterval(timerInterval);
@@ -315,5 +316,13 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
     }
     else if (req.message == "isTimerExist"){
         sendResponse({"message": isTimerExist})
+    }
+    else if (req.message == "isHardcoreOn"){
+        sendResponse({"message": isHardcoreModeOn})
+    }
+    else if (req.message == "hardcoreButton"){
+        isHardcoreModeOn = !isHardcoreModeOn
+        sendResponse({"message": isHardcoreModeOn})
+        // isHardcoreModeOn = !isHardcoreModeOn
     }
 })
