@@ -153,7 +153,7 @@
     z-index: 11;
     width: 100%;
     cursor: pointer;
-    transition: height ease-in-out 0.4s;
+    transition: height ease-in-out 0.4s, border, ease, 0.3s;
     transition-delay: 0.1s;
 }
 

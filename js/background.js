@@ -400,5 +400,3 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
         }
     }
 })
-
-saveSecondsAtDate(5100*60, "2020-04-5")

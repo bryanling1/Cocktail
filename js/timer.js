@@ -25,6 +25,12 @@ const timerValRef = document.getElementById("cockTime")
 const todayTimeRef = document.getElementById("today")
 const eyeSwitchRef = document.getElementById("eye-switch")
 const eyeSwitchCheckRef = document.getElementById("eye-switch-check")
+// const statsMenuRef =  document.getElementById('stats-menu-icon');
+// const homeMenuRef =  document.getElementById('home-menu-icon');
+// const barMenuRef =  document.getElementById('bar-menu-icon');
+const statsRef = document.getElementById('stats');
+// const homeRef = document.getElementById('home');
+const barRef = document.getElementById('bar');
 //level progress
 const dataColumns = document.querySelectorAll(".bars .column .val")
 let timerVal = 10;
@@ -259,6 +265,14 @@ function initHardcoreMode(){
         }
     })
 }
+
+function setHomeView(){
+    menuSelectorRef.style.left = '132px';
+    statsRef.style.display = "none";
+    homeRef.style.display = "block";
+    barRef.style.display = "none";
+}
+
 chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
     if(req.message == "getTimerTick"){
         displayTime(req.time);
@@ -282,6 +296,7 @@ chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
         displayMinutesToday()
         showElementsWhenTimerOff()
     }else if(req.message == "timerIsOn"){
+        setHomeView()
         hideElementsWhileTimerOn()
     }else if(req.message == "timerIsOff"){
         showElementsWhenTimerOff()

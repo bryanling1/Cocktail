@@ -63,28 +63,39 @@ rightArrowYearRef.onclick = function(){
     rightArrowYearClick();
 }
 
-
-homeMenuRef.onclick = function(){
+function setHomeView(){
     menuSelectorRef.style.left = '132px';
     statsRef.style.display = "none";
     homeRef.style.display = "block";
     barRef.style.display = "none";
 }
 
-
-statsMenuRef.onclick = function(){
+function setStatsView(){
     menuSelectorRef.style.left = '33px';
     statsRef.style.display = "block";
     homeRef.style.display = "none";
     barRef.style.display = "none";
 }
 
-
-barMenuRef.onclick = function(){
+function setBarView(){
     menuSelectorRef.style.left = '232px';
     statsRef.style.display = "none";
     homeRef.style.display = "none";
     barRef.style.display = "block";
+}
+
+homeMenuRef.onclick = function(){
+    setHomeView()
+}
+
+
+statsMenuRef.onclick = function(){
+    setStatsView()
+}
+
+
+barMenuRef.onclick = function(){
+    setBarView()
 }
 
 
