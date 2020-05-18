@@ -71,6 +71,7 @@ function setHomeView(){
 }
 
 function setStatsView(){
+    loadAllStats()
     menuSelectorRef.style.left = '33px';
     statsRef.style.display = "block";
     homeRef.style.display = "none";
@@ -455,20 +456,24 @@ function isLeapYear(year) {
      return year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0);
 }
 
+function loadAllStats(){
+    setCurrentWeekDates(dateIRange);
+    setWeekVals();
+    displayDateRange();
+    setArrowColors();
+    setCurrentMonthDates()
+    setMonthVals()
+    displayMonthRange()
+    setArrowColorsMonth()
+    setCurrentYearDates()
+    setYearVals()
+    displayYearRange()
+    setArrowColorsYear()
+    
+}
 
-setCurrentWeekDates(dateIRange);
-setWeekVals();
-displayDateRange();
-setArrowColors();
-setCurrentMonthDates()
-setMonthVals()
-displayMonthRange()
-setArrowColorsMonth()
+loadAllStats()
 
-setCurrentYearDates()
-setYearVals()
-displayYearRange()
-setArrowColorsYear()
 
 
 
