@@ -33,24 +33,18 @@ let minutesToday = 0;
 let hardcoreButtonColor = "";
 
 playButtonRef ? (playButtonRef.onclick = function(){
-    timerButton();
-    cardRef.style.display = "none";
-    minutesTodayRef.style.display = "none"
-    navbarBlockerRef.style.display = "block"
+    startTimer()
 }):(null);
 
 
-playButtonRef ? (successButtonRef.onclick = function(){
+successButtonRef ? (successButtonRef.onclick = function(){
     toggleSuccess();
     setBeverage();
 }):(null);
 
 
 cardPlayButtonRef ? (cardPlayButtonRef.onclick = function(){
-    timerButton();
-    cardRef.style.display = "none";
-    minutesTodayRef.style.display = "none"
-    navbarBlockerRef.style.display = "block"
+    startTimer()
 }):(null);
 
 if(cocktailButtonRef1){
@@ -65,19 +59,8 @@ if(cocktailButtonRef2){
     }
 }
 
-// if(eyeSwitchRef){
-//     eyeSwitchRef.onclick = function(){
-//         console.log(eyeSwitchCheckRef.checked)
-//         // chrome.extension.sendMessage({"message": "hardcoreMode"})
-//         // initHardcoreMode()
-//     }
-// }
-
+if(eyeSwitchCheckRef != null){
 eyeSwitchCheckRef.addEventListener('change',function(){
-    // if(this.checked)
-    //   console.log('toggle: Show');
-    // else
-    //   console.log('toggle: Hide');
     chrome.extension.sendMessage({"message": "hardcoreButton"}, function(res){
         if(res.message){
             setHardcoreMode()
@@ -88,6 +71,21 @@ eyeSwitchCheckRef.addEventListener('change',function(){
         }
     })
   });
+}
+
+function startTimerNow(){
+    timerButton();
+    cardRef.style.display = "none";
+    minutesTodayRef.style.display = "none"
+    navbarBlockerRef.style.display = "block"
+}
+
+function startTimer(){
+    timerButton();
+    cardRef.style.display = "none";
+    minutesTodayRef.style.display = "none"
+    navbarBlockerRef.style.display = "block"
+}
 
 function timerButton(){
     chrome.extension.sendMessage({"message":"timerButton", "time": timerVal});
@@ -249,40 +247,6 @@ function secondsToClockString(time){
 }
 
 
-function pushEmptyNotification() {
-    // Let's check if the browser supports notifications
-    if (!("Notification" in window)) {
-      alert("This browser does not support desktop notification");
-    }
-  
-    // Let's check whether notification permissions have already been granted
-    else if (Notification.permission === "granted") {
-      // If it's okay let's create a notification
-      var notification = new Notification("You're out of cocktails!", 
-      {
-          "icon": "./images/default.png",
-          "body": "Get back on it!"
-      }
-       );
-    }
-    // Otherwise, we need to ask the user for permission
-    else if (Notification.permission !== "denied") {
-      Notification.requestPermission().then(function (permission) {
-        // If the user accepts, let's create a notification
-        if (permission === "granted") {
-            var notification = new Notification("You're out of cocktails!", 
-            {
-                "icon": "./images/default.png",
-                "body": "Get back on it!"
-            }
-            );
-        }
-      });
-    }
-    // At last, if the user has denied notifications, and you 
-    // want to be respectful there is no need to bother them any more.
-  }
-
 function initHardcoreMode(){
     chrome.extension.sendMessage({"message": "isHardcoreOn"}, function(res){
         if(res.message == true){
@@ -340,7 +304,6 @@ if(video){
     // });
     pauseVideo = function(){
         video.pause();
-        pushEmptyNotification();
     }
 }
 
@@ -391,6 +354,7 @@ function checkClockToHideElements(){
         }
     });
 }
+
 
 function setHardcoreMode(){
     homeRef.style.backgroundColor = "#232323"

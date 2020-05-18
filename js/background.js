@@ -37,7 +37,8 @@ function cockClockDown(){
             chrome.tabs.sendMessage(tabs[0].id, {"message": "noCockTime"});
           });
         isCocktailTimerOn = false;
-        if(isHardcoreModeOn){
+        pushEmptyNotification()
+        if(isHardcoreModeOn && beverageSet){
             startTimer()
         }
     }else{
@@ -107,6 +108,10 @@ function setCocktailSeconds(seconds){
 
 
 function pushSuccessNotification() {
+    hardCoreMessage = ""
+    if(isHardcoreModeOn){
+        hardCoreMessage = "Break timer started!"
+    }
     // Let's check if the browser supports notifications
     if (!("Notification" in window)) {
       alert("This browser does not support desktop notification");
@@ -117,7 +122,7 @@ function pushSuccessNotification() {
       var notification = new Notification("Your Cocktail is Ready!", 
       {
           "icon": "./images/default.png",
-          "body": "Enjoy!"
+          "body": "Enjoy! " +  hardCoreMessage
       }
        );
     }
@@ -126,10 +131,11 @@ function pushSuccessNotification() {
       Notification.requestPermission().then(function (permission) {
         // If the user accepts, let's create a notification
         if (permission === "granted") {
-            var notification = new Notification("Your Cocktail is Ready!", 
+            var notification = new Notification(
+                "Your Cocktail is Ready!", 
             {
                 "icon": "./images/default.png",
-                "body": "Enjoy!"
+                "body": "Enjoy! " +  hardCoreMessage
             }
              );
         }
@@ -138,6 +144,44 @@ function pushSuccessNotification() {
     // At last, if the user has denied notifications, and you 
     // want to be respectful there is no need to bother them any more.
 }
+
+function pushEmptyNotification(){
+    hardCoreMessage = ""
+    if(isHardcoreModeOn){
+        hardCoreMessage = "Timer just started!"
+    }
+    // Let's check if the browser supports notifications
+    if (!("Notification" in window)) {
+      alert("This browser does not support desktop notification");
+    }
+  
+    // Let's check whether notification permissions have already been granted
+    else if (Notification.permission === "granted") {
+      // If it's okay let's create a notification
+      var notification = new Notification("You're out of cocktails!", 
+      {
+          "icon": "./images/default.png",
+          "body": "Get back on it! "+ hardCoreMessage
+      }
+       );
+    }
+    // Otherwise, we need to ask the user for permission
+    else if (Notification.permission !== "denied") {
+      Notification.requestPermission().then(function (permission) {
+        // If the user accepts, let's create a notification
+        if (permission === "granted") {
+            var notification = new Notification("You're out of cocktails!", 
+            {
+                "icon": "./images/default.png",
+                "body": "Get back on it! " + hardCoreMessage
+            }
+            );
+        }
+      });
+    }
+    // At last, if the user has denied notifications, and you 
+    // want to be respectful there is no need to bother them any more.
+  }
 
   
 function saveSeconds(seconds){
@@ -223,11 +267,13 @@ function addBeverage(name, cocktailSeconds, timeUntilReady, cashPrize){
 }
 
 function initCocktailTimer(){
-    chrome.storage.sync.get("cocktailSeconds", function(data){
-        cockTimerVal = data["cocktailSeconds"];
-        cockTimerInterval = setInterval(cockClockDown, 1000);
-        isCocktailTimerOn = true;
-    });
+    if(isTimerExist == false){
+        chrome.storage.sync.get("cocktailSeconds", function(data){
+            cockTimerVal = data["cocktailSeconds"];
+            cockTimerInterval = setInterval(cockClockDown, 1000);
+            isCocktailTimerOn = true;
+        });
+    }
 }
 
 function startTimer(){
@@ -244,6 +290,8 @@ function startTimer(){
         stopCockClock();
         isCocktailTimerOn = false;
     }
+    //make sure we the cocktail is stopped
+    pauseCocktailTimer()
 }
 
 function pauseCocktailTimer(){
