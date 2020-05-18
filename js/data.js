@@ -199,10 +199,15 @@ function setBarStylingToNotToday(ref){
 
 
 function setBarStylingToTodayMonth(ref){
-    ref.style.backgroundColor = "rgba(0,0,0,0)"
+    ref.style.backgroundColor = RGBToRGBA(ref.style.backgroundColor, 0)
     ref.style.boxSizing = "border-box"
     ref.style.borderWidth = "1.6px"
     ref.style.borderStyle = "Solid"
+}
+
+function setBarStylingToNotTodayMonth(ref){
+    ref.style.backgroundColor = RGBAToRGB(ref.style.backgroundColor)
+    ref.style.borderWidth = "0px"
 }
 
 
@@ -263,6 +268,7 @@ function setCurrentMonthDates(){
 function setMonthVals(){
     let largestVal = 0;
     let allData = null;
+    let isLargestSet = false; // for multiple same bests
     chrome.storage.sync.get("allData", function(data){
     if(data){
         allData = data['allData'];
@@ -284,14 +290,17 @@ function setMonthVals(){
         monthChartRef.forEach((item, i)=>{
             if(i < days){
             item.style.height = Math.floor(monthData[i]['minutes'] / largestVal * 100).toString()+"%";
-            if(monthData[i]['minutes'] > 0 && monthData[i]['minutes']  == largestVal){
+            if(monthData[i]['minutes'] > 0 && monthData[i]['minutes']  == largestVal && isLargestSet == false){
                 item.querySelector(".text").innerHTML = monthData[i]['minutes'];
+                isLargestSet = true
             }else{
                 //if the bar is not the tallest     
                 item.querySelector(".text").innerHTML = "";
             }
             if(new Date().getTime() - monthData[i]["date"].getTime() < 24*3600*1000 && monthData[i]['minutes']){
                 setBarStylingToTodayMonth(item)
+            }else{
+                setBarStylingToNotTodayMonth(item)
             }
             }
         })
@@ -352,6 +361,7 @@ function setCurrentYearDates(){
 function setYearVals(){
     let largestVal = 0;
     let allData = null;
+    let isLargestSet = false;
     chrome.storage.sync.get("allData", function(data){
     if(data){
         allData = data['allData'];
@@ -371,14 +381,17 @@ function setYearVals(){
         const yearChartRef = document.querySelectorAll(".year .bars .column .val");
         yearChartRef.forEach((item, i)=>{
             item.style.height = Math.floor(yearData[i]['minutes'] / largestVal * 100).toString()+"%";
-            if(yearData[i]['minutes'] > 0){
+            if(yearData[i]['minutes'] > 0 && yearData[i]['minutes'] == largestVal && isLargestSet == false){
                 item.querySelector(".text").innerHTML = yearData[i]['minutes'];
-                
+                isLargestSet = true;
             }else{
                 item.querySelector(".text").innerHTML = "";
             }
-            if(new Date().getTime() - yearData[i]["date"].getTime()  <= 24*3600*1000 * days_of_a_year(yearData[i]["date"].getFullYear()) && yearData[i]['minutes'] > 0){
+            const days =getDaysInMonth(dateIRangeYear.getFullYear(), dateIRangeYear.getMonth() + 1);
+            if(new Date().getTime() - yearData[i]["date"].getTime()  <= 24*3600*1000 *days && yearData[i]['minutes'] > 0){
                 setBarStylingToToday(item)
+            }else{
+                setBarStylingToNotToday(item)
             }
         })
     }
