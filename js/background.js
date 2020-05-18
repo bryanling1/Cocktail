@@ -395,7 +395,7 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
     else if (req.message == "hardcoreButton"){
         isHardcoreModeOn = !isHardcoreModeOn
         sendResponse({"message": isHardcoreModeOn})
-        if(isHardcoreModeOn){
+        if(isHardcoreModeOn && !isCocktailTimerOn){
             initCocktailTimer()
         }
     }
