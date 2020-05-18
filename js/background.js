@@ -121,7 +121,7 @@ function pushSuccessNotification() {
       // If it's okay let's create a notification
       var notification = new Notification("Your Cocktail is Ready!", 
       {
-          "icon": "./images/default.png",
+          "icon": "./images/drink-icon.png",
           "body": "Enjoy! " +  hardCoreMessage
       }
        );
@@ -134,7 +134,7 @@ function pushSuccessNotification() {
             var notification = new Notification(
                 "Your Cocktail is Ready!", 
             {
-                "icon": "./images/default.png",
+                "icon": "./images/drink-icon.png",
                 "body": "Enjoy! " +  hardCoreMessage
             }
              );
@@ -160,7 +160,7 @@ function pushEmptyNotification(){
       // If it's okay let's create a notification
       var notification = new Notification("You're out of cocktails!", 
       {
-          "icon": "./images/default.png",
+          "icon": "./images/drink-icon.png",
           "body": "Get back on it! "+ hardCoreMessage
       }
        );
@@ -172,7 +172,7 @@ function pushEmptyNotification(){
         if (permission === "granted") {
             var notification = new Notification("You're out of cocktails!", 
             {
-                "icon": "./images/default.png",
+                "icon": "./images/drink-icon.png",
                 "body": "Get back on it! " + hardCoreMessage
             }
             );
