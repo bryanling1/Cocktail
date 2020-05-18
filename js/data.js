@@ -159,6 +159,8 @@ function setWeekVals(){
                 item.querySelector(".text").innerHTML = weekData[i]['minutes'];
                 if(new Date().getTime() - weekData[i]["date"].getTime() < 24*3600*1000){
                     setBarStylingToToday(item)
+                }else{
+                    setBarStylingToNotToday(item)
                 }
             }else{
                 item.style.borderWidth = 0
@@ -169,12 +171,30 @@ function setWeekVals(){
 })
 }
 
+function RGBToRGBA(rgb, a){
+	let rgba = rgb.replace("rgb(",'').replace(")", '')
+    rgba = rgba.split(",")
+    rgba = "rgba(" + rgba.join() + " ," + a + ")"
+    return rgba
+    
+}
+
+function RGBAToRGB(rgba){
+	let rgb = rgba.replace("rgba(",'').replace(")", '')
+    rgb = rgb.split(",").slice(0, 3)
+    return "rgb(" + rgb.join()+")"
+}
 
 function setBarStylingToToday(ref){
-    ref.style.backgroundColor = "rgba(0,0,0,0)"
+    ref.style.backgroundColor = RGBToRGBA(ref.style.backgroundColor, 0)
     ref.style.boxSizing = "border-box"
     ref.style.borderWidth = "3.6px"
     ref.style.borderStyle = "Solid"
+}
+
+function setBarStylingToNotToday(ref){
+    ref.style.backgroundColor = RGBAToRGB(ref.style.backgroundColor)
+    ref.style.borderWidth = "0px"
 }
 
 
